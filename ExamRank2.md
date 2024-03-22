@@ -3163,47 +3163,3006 @@ int	main(int argc, char const *argv[])
 ---
 ## Lvl 3
 
-### template
+### add_prime_sum
 ```
-template
+Assignment name  : add_prime_sum
+Expected files   : add_prime_sum.c
+Allowed functions: write, exit
+--------------------------------------------------------------------------------
+
+Write a program that takes a positive integer as argument and displays the sum
+of all prime numbers inferior or equal to it followed by a newline.
+
+If the number of arguments is not 1, or the argument is not a positive number,
+just display 0 followed by a newline.
+
+Yes, the examples are right.
+
+Examples:
+
+$>./add_prime_sum 5
+10
+$>./add_prime_sum 7 | cat -e
+17$
+$>./add_prime_sum | cat -e
+0$
+$>
 ```
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer add_prime_sum gitbook</summary>
   
 ```c
 #include <unistd.h>
 
-int main (int argc, char **argv)
+void ft_putchar(char c);
+void ft_putnbr(int nbr);
+int is_prime(int nbr);
+int ft_atoi(char *str);
+
+void ft_putchar(char c)
 {
-	return(0)
+    write(1, &c, 1);
+}
+
+void ft_putnbr(int nbr)
+{
+    unsigned int nb;
+    
+    if (nbr < 0)
+    {
+        ft_putchar('-');
+        nb = -nbr;
+    }
+    else
+    	nb = nbr;
+    if (nb >= 10)
+        ft_putnbr(nb / 10);
+    ft_putchar(nb % 10 + '0');
+}
+
+// checking if a number is a prime number
+int is_prime(int nbr)
+{
+    // first prime number is 3, if nbr smaller than that we
+    // can return 0 to say it's not prime
+    if (nbr < 2)
+        return (0);
+    // checking all factors up until half nbr
+    // going over nbr/2 is useless, let's take an example
+    // nbr = 10; nbr/2 = 5; If we check for 3, checking for 6
+    // will give the same result
+    int i = 2;
+    while (i <= nbr / 2)
+    {
+        if (nbr % i == 0)
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
+// You know how this works
+int ft_atoi(char *str)
+{
+    int res = 0, sign = 1, i = 0;
+    while (str[i] == ' ')
+        i++;
+    if (str[i] == '+' || str[i] == '-')
+        if (str[i++] == '-')
+            sign = -1;
+    while (str[i] && str[i] >= 48 && str[i] <= 57)
+    {
+        res *= 10;
+        res += str[i] - 48;
+        i++;
+    }
+    res *= sign;
+    return (res);
+}
+
+int main(int ac, char **av)
+{
+    if (ac != 2 || ft_atoi(av[1]) <= 0)
+    {
+        write(1, "0\n", 2);
+        return (0);
+    }
+    int n = ft_atoi(av[1]);
+    
+    // The following is the actual logic for add_prime_sum
+    // we check every number up until what's given via the
+    // command line and if the number is prime, we add it
+    // to the whole sum.
+    int sum = 0;
+    while (n > 1)
+    {
+        if (is_prime(n))
+            sum += n;
+        n--;
+    }
+    ft_putnbr(sum);
+    ft_putchar('\n');
+}
+```
+</details>
+
+<details>
+  <summary>Answer add_prime_sum pasqualerossi</summary>
+  
+```c
+#include <unistd.h>
+
+int	ft_atoi(char *s)
+{
+	int	res = 0;
+
+	while (*s)
+		res = res * 10 + *s++ - 48;
+	return (res);
+}
+
+int	is_prime(int num)
+{
+	int	i = 2;
+
+	if (num <= 1)
+		return (0);
+	while (i * i <= num)
+	{
+		if (num % i == 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	put_nbr(int n)
+{
+	if (n >= 10)
+		put_nbr(n / 10);
+	char digit = n % 10 + '0';
+	write(1, &digit, 1);
+}
+
+int main(int ac, char **av)
+{
+
+	if (ac == 2)
+	{
+		int	nbr = ft_atoi(av[1]);
+		int	sum = 0;
+
+		while (nbr > 0)
+		{
+			if (is_prime(nbr))
+				sum += nbr;
+			nbr--;
+		}
+		put_nbr(sum);
+	}
+	write(1, "\n", 1);
+	return (0);
+}
+```
+</details>
+
+<details>
+  <summary>Answer add_prime_sum emreakdik/jcluzet</summary>
+  
+```c
+#include <unistd.h>
+
+int		ft_atoi(char *str)
+{
+	int n = 0;
+
+	while (*str >= '0' && *str <= '9')
+	{
+		n *= 10;
+		n += *str - '0';
+		++str;
+	}
+	return (n);
+}
+
+void	ft_putnbr(int n)
+{
+	if (n >= 10)
+		ft_putnbr(n / 10);
+	char c = (n % 10) + '0';
+	write(1, &c, 1);
+}
+
+int		is_prime(int n)
+{
+	int i = 2;
+
+	while (i < n)
+	{
+		if (n % i == 0)
+			return (0);
+		++i;
+	}
+	return (1);
+}
+
+int		add_prime_sum(int n)
+{
+	int sum = 0;
+	int i = 2;
+
+	while (i <= n)
+	{
+		if (is_prime(i) == 1)
+			sum += i;
+		++i;
+	}
+	return (sum);
+}
+
+int		main(int argc, char **argv)
+{
+	int n;
+
+	if (argc == 2 && (n = ft_atoi(argv[1])))
+		ft_putnbr(add_prime_sum(n));
+	else
+		ft_putnbr(0);
+	write(1, "\n", 1);
+	return (0);
 }
 ```
 </details>
 
 ---
+### epur_str
+```
+Assignment name  : epur_str
+Expected files   : epur_str.c
+Allowed functions: write
+--------------------------------------------------------------------------------
 
+Write a program that takes a string, and displays this string with exactly one
+space between words, with no spaces or tabs either at the beginning or the end,
+followed by a \n.
+
+A "word" is defined as a part of a string delimited either by spaces/tabs, or
+by the start/end of the string.
+
+If the number of arguments is not 1, or if there are no words to display, the
+program displays \n.
+
+Example:
+
+$> ./epur_str "vous voyez c'est facile d'afficher la meme chose" | cat -e
+vous voyez c'est facile d'afficher la meme chose$
+$> ./epur_str " seulement          la c'est      plus dur " | cat -e
+seulement la c'est plus dur$
+$> ./epur_str "comme c'est cocasse" "vous avez entendu, Mathilde ?" | cat -e
+$
+$> ./epur_str "" | cat -e
+$
+$>
+```
+
+<details>
+  <summary>Answer epur_str gitbook</summary>
+  
+```c
+#include <unistd.h>
+
+void ft_putchar(char c)
+{
+    write(1, &c, 1);
+}
+
+int is_space(char c)
+{
+    if (c <= 32)
+        return 1;
+    return 0;
+}   
+
+int main(int ac, char **av)
+{
+    if (ac == 2)
+    {
+        int i = 0, space = 0;
+        // skipping all leading blank chars
+        while (is_space(av[1][i]))
+            i++;
+        while (av[1][i])
+        {
+            // if there is a blank char, make the space flag 1
+            // if there are multiple blank, it will be set
+            // to 1 each time
+            if (is_space(av[1][i]))
+                space = 1;
+            // if current char is not a blank char
+            // write a space if flag is on
+            // set the space flag back to 0
+            // write current char
+            if (!is_space(av[1][i]))
+            {
+                if (space)
+                    ft_putchar(' ');
+                space = 0;
+                ft_putchar(av[1][i]);
+            }
+            i++;
+        }
+    }
+    ft_putchar('\n');
+}
+```
+</details>
+
+<details>
+  <summary>Answer epur_str pasqualerossi</summary>
+  
+```c
+#include <unistd.h>
+
+int main(int argc, char const *argv[])
+{
+	int i;
+	int flg;
+
+	if (argc == 2)
+	{
+		i = 0;
+		while (argv[1][i] == ' ' || argv[1][i] == '\t')
+			i += 1;
+		while (argv[1][i])
+		{
+			if (argv[1][i] == ' ' || argv[1][i] == '\t')
+				flg = 1;
+			if (!(argv[1][i] == ' ' || argv[1][i] == '\t'))
+			{
+				if (flg)
+					write(1, " ", 1);
+				flg = 0;
+				write(1, &argv[1][i], 1);
+			}
+			i += 1;
+		}
+	}
+	write(1, "\n", 1);
+	return (0);
+}
+```
+</details>
+
+<details>
+  <summary>Answer epur_str emreakdik/jcluzet</summary>
+  
+```c
+#include <unistd.h>
+
+int		skip_whitespace(char *str, int i)
+{
+	while (str[i] == ' ' || str[i] == '\t')
+		++i;
+	return (i);
+}
+
+int		ft_wordlen(char *str)
+{
+	int i = 0;
+
+	while (str[i] != '\0' && str[i] != ' ' && str[i] != '\t')
+		++i;
+	return (i);
+}
+
+void	epur_str(char *str)
+{
+	int i = 0;
+	int first_word = 1;
+	int word_len;
+
+	i = skip_whitespace(str, i);
+	while (str[i] != '\0')
+	{
+		if (first_word == 0)
+			write(1, " ", 1);
+		word_len = ft_wordlen(str + i);
+		write(1, str + i, word_len);
+		i = i + word_len;
+		first_word = 0;
+		i = skip_whitespace(str, i);
+	}
+}
+
+int		main(int argc, char **argv)
+{
+	if (argc == 2)
+		epur_str(argv[1]);
+	write(1, "\n", 1);
+	return (0);
+}
+```
+</details>
+
+---
+### expand_str
+```
+Assignment name  : expand_str
+Expected files   : expand_str.c
+Allowed functions: write
+--------------------------------------------------------------------------------
+
+Write a program that takes a string and displays it with exactly three spaces
+between each word, with no spaces or tabs either at the beginning or the end,
+followed by a newline.
+
+A word is a section of string delimited either by spaces/tabs, or by the
+start/end of the string.
+
+If the number of parameters is not 1, or if there are no words, simply display
+a newline.
+
+Examples:
+
+$> ./expand_str "vous   voyez   c'est   facile   d'afficher   la   meme   chose" | cat -e
+vous   voyez   c'est   facile   d'afficher   la   meme   chose$
+$> ./expand_str " seulement          la c'est      plus dur " | cat -e
+seulement   la   c'est   plus   dur$
+$> ./expand_str "comme c'est cocasse" "vous avez entendu, Mathilde ?" | cat -e
+$
+$> ./expand_str "" | cat -e
+$
+$>
+```
+
+<details>
+  <summary>Answer expand_str gitbook</summary>
+  
+```c
+#include <unistd.h>
+
+void ft_putchar(char c)
+{
+    write(1, &c, 1);
+}
+
+int is_space(char c)
+{
+    if (c <= 32)
+        return 1;
+    return 0;
+}
+
+int main(int ac, char **av)
+{
+    if (ac == 2)
+    {
+        int i = 0, space = 0;
+        // skipping all leading blank chars
+        while (is_space(av[1][i]))
+            i++;
+        while (av[1][i])
+        {
+            // if there is a blank char, make the space flag 1
+            // if there are multiple blank, it will be set
+            // to 1 each time
+            if (is_space(av[1][i]))
+                 space = 1;
+            // if current char is not a blank char
+            // write 3 spaces if flag is on
+            // set the space flag back to 0
+            // write current char
+            if (!is_space(av[1][i]))
+            {
+                if (space)
+                    write(1, "   ", 3);
+                space = 0;
+                ft_putchar(av[1][i]);
+            }
+            i++;
+        }
+    }
+    ft_putchar('\n');
+}
+```
+</details>
+
+<details>
+  <summary>Answer expand_str pasqualerossi</summary>
+  
+```c
+#include <unistd.h>
+
+int main(int argc, char const *argv[])
+{
+    int i;
+    int flag;
+
+    if (argc == 2)
+    {
+        i = 0;
+        while (argv[1][i] == ' ' || argv[1][i] == '\t')
+            i++;
+        while (argv[1][i])
+        {
+            if (argv[1][i] == ' ' || argv[1][i] == '\t')
+                flag = 1;
+            if (!(argv[1][i] == ' ' || argv[1][i] == '\t'))
+            {
+                if (flag)
+                    write(1, "   ", 3);
+                flag = 0;
+                write(1, &argv[1][i], 1);
+            }
+            i++;
+        }
+    }
+    write(1, "\n", 1);
+    return (0);
+}
+```
+</details>
+
+<details>
+  <summary>Answer expand_str emreakdik/jcluzet</summary>
+  
+```c
+#include <unistd.h>
+
+int		word_len(char *str)
+{
+	int i = 0;
+	while (str[i] != '\0' && str[i] != ' ' && str[i] != '\t')
+		++i;
+	return (i);
+}
+
+void	expand_str(char *str)
+{
+	int len;
+	int first_word = 1;
+
+	while (*str != '\0')
+	{
+		while (*str == ' ' || *str == '\t')
+			++str;
+		len = word_len(str);
+		if (len > 0 && first_word == 0)
+			write(1, "   ", 3);
+		first_word = 0;
+		write(1, str, len);
+		str = str + len;
+	}
+}
+
+int		main(int argc, char **argv)
+{
+	if (argc == 2)
+		expand_str(argv[1]);
+
+	write(1, "\n", 1);
+	return (0);
+}
+```
+</details>
+
+---
+### ft_atoi_base
+```
+Assignment name  : ft_atoi_base
+Expected files   : ft_atoi_base.c
+Allowed functions: None
+--------------------------------------------------------------------------------
+
+Write a function that converts the string argument str (base N <= 16)
+to an integer (base 10) and returns it.
+
+The characters recognized in the input are: 0123456789abcdef
+Those are, of course, to be trimmed according to the requested base. For
+example, base 4 recognizes "0123" and base 16 recognizes "0123456789abcdef".
+
+Uppercase letters must also be recognized: "12fdb3" is the same as "12FDB3".
+
+Minus signs ('-') are interpreted only if they are the first character of the
+string.
+
+Your function must be declared as follows:
+
+int	ft_atoi_base(const char *str, int str_base);
+```
+
+<details>
+  <summary>Answer ft_atoi_base gitbook</summary>
+  
+```c
+int ft_atoi_base(const char *str, int str_base);
+int isspace(int c);
+int isvalid(int c, int baselen);
+
+int ft_atoi_base(const char *str, int str_base)
+{
+    int res = 0, sign = 1, i = 0;
+    // Skip the whitespaces
+    while (isspace(str[i])
+        i++;
+    // Check if the number is negative
+    if (str[i] == '+' && str[i + 1] != '-')
+        i++;
+    // If the number is negative, set the sign to -1 and skip the '-'
+    if (str[i] == '-')
+    {
+        sign = -1;
+        i++;
+    }
+    
+    // Loop through the string and convert the numebr to base 10
+    while (str[i] && isvalid(str[i], str_base))
+    {
+        // Multiply the result by the base
+        res *= str_base;
+        
+        // Add the value of the character to the result
+        // If the character is a digit, substract the value of '0'
+        // from it
+        // i.e. '5' - '0' = 5 because the ASCII value of '5' is 53
+        // and the ASCII value of '0' is 48
+        if (str[i] >= '0' && str[i] <= 9)
+            res += str[i] - '0';
+        // If the character is a leter, substract the value of 'a' or
+        // 'A' from it and add 10
+        // i.e. 'f' - 'a' + 10  = 15 because the ASCII value of 'f' is
+        // 102 and the ASCII value of 'a' is 97
+        else if (str[i] >= 'a' && str[i] <= 'f')
+            res += str[i] - 'a' + 10;
+        else if (str[i] >= 'A' && str[i] <= 'F')
+            res += str[i] - 'A' + 10;
+        i++;
+    }
+    // Return the result multiplied by the sign
+    return (res * sign);
+}
+// Simple function to check if the character is valid for the base
+int isvalid(int ch, int baselen)
+{
+    // Define the base
+    char *lcbase = "0123456789abcdef";
+    char *ucbase = "0123456789ABCDEF";
+    int i = 0;
+    
+    // Loop through the base and check if the character is valid
+    while (i < baselen)
+    {
+        // If the character is found in the base, return 1
+        if (ch == lcbase[i] || ch == ucbase[i])
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
+// Simple function to check if the character is a whitespace
+int isspace(int c)
+{
+     if (c == 9 || c == 10 || c == 11 || c == 12 || c == 13 || c == 32)
+         return (1);
+     return (0);
+}
+
+// Uncomment the main to test the function
+// #include <stdio.h>
+// int	main(int ac, char **av)
+// {
+// 	(void) ac;
+// 	(void) av;
+// 	if (ac == 3)
+// 	{
+// 		printf("%d", ft_atoi_base(av[1], ft_atoi_base(av[2], 10)));
+// 		return (0);
+// 	}
+// }
+```
+</details>
+
+<details>
+  <summary>Answer ft_atoi_base pasqualerossi</summary>
+  
+```c
+char	to_lower(char c)
+{
+	if (c >= 'A' && c <= 'Z')
+		return (c + ('a' - 'A'));
+	return (c);
+}
+
+int get_digit(char c, int digits_in_base)
+{
+	int max_digit;
+	if (digits_in_base <= 10)
+		max_digit = digits_in_base + '0';
+	else
+		max_digit = digits_in_base - 10 + 'a';
+
+	if (c >= '0' && c <= '9' && c <= max_digit)
+		return (c - '0');
+	else if (c >= 'a' && c <= 'f' && c <= max_digit)
+		return (10 + c - 'a');
+	else
+		return (-1);
+}
+
+int ft_atoi_base(const char *str, int str_base)
+{
+	int result = 0;
+	int sign = 1;
+	int digit;
+
+	if (*str == '-')
+	{
+		sign = -1;
+		++str;
+	}
+
+	while ((digit = get_digit(to_lower(*str), str_base)) >= 0)
+	{
+		result = result * str_base;
+		result = result + (digit * sign);
+		++str;
+	}
+	return (result);
+}
+```
+</details>
+
+<details>
+  <summary>Answer ft_atoi_base emreakdik/jcluzet</summary>
+  
+```c
+char	to_lower(char c)
+{
+	if (c >= 'A' && c <= 'Z')
+		return (c + ('a' - 'A'));
+	return (c);
+}
+
+int get_digit(char c, int digits_in_base)
+{
+	int max_digit;
+	if (digits_in_base <= 10)
+		max_digit = digits_in_base + '0';
+	else
+		max_digit = digits_in_base - 10 + 'a';
+
+	if (c >= '0' && c <= '9' && c <= max_digit)
+		return (c - '0');
+	else if (c >= 'a' && c <= 'f' && c <= max_digit)
+		return (10 + c - 'a');
+	else
+		return (-1);
+}
+
+int ft_atoi_base(const char *str, int str_base)
+{
+	int result = 0;
+	int sign = 1;
+	int digit;
+
+	if (*str == '-')
+	{
+		sign = -1;
+		++str;
+	}
+
+	while ((digit = get_digit(to_lower(*str), str_base)) >= 0)
+	{
+		result = result * str_base;
+		result = result + (digit * sign);
+		++str;
+	}
+	return (result);
+}
+
+/* #include <stdio.h>
+#include <stdlib.h>
+int		ft_atoi_base(const char *str, int str_base);
+
+int main(int argc, char **argv)
+{
+    if (argc == 3)
+    {
+        printf("%d\n", ft_atoi_base(argv[1], atoi(argv[2])));
+    }
+    return (0);
+} */
+```
+</details>
+
+---
+### ft_list_size
+```
+Assignment name  : ft_list_size
+Expected files   : ft_list_size.c, ft_list.h
+Allowed functions:
+--------------------------------------------------------------------------------
+
+Write a function that returns the number of elements in the linked list that's
+passed to it.
+
+It must be declared as follows:
+
+int	ft_list_size(t_list *begin_list);
+
+You must use the following structure, and turn it in as a file called
+ft_list.h:
+
+typedef struct    s_list
+{
+    struct s_list *next;
+    void          *data;
+}                 t_list;
+```
+
+<details>
+  <summary>Answer ft_list_size gitbook</summary>
+  
+```c
+#include "ft_list.h"
+
+int ft_list_size(t_list *begin_list)
+{
+    int i = 0;
+    
+    // Loop over list elements while the next element is not null
+    while (begin_list->next)
+    {
+        // set the original pointer equal to a pointer to the
+        // next element and increment our counter
+        begin_list = begin_list->next;
+        i++;
+    }
+    // return the counter
+    return (i);
+}
+```
+</details>
+
+<details>
+  <summary>Answer ft_list_size pasqualerossi</summary>
+  
+```c
+#include "ft_list.h"
+
+int	ft_list_size(t_list *begin_list)
+{
+	if (begin_list == 0)
+		return (0);
+	else
+		return (1 + ft_list_size(begin_list->next));
+}
+```
+</details>
+
+<details>
+  <summary>Answer ft_list_size emreakdik/jcluzet</summary>
+  
+```c
+#include "ft_list.h"
+
+int	ft_list_size(t_list *begin_list)
+{
+	if (begin_list == 0)
+		return (0);
+	else
+		return (1 + ft_list_size(begin_list->next));
+}
+
+/* #include <stdio.h>
+#include <stdlib.h>
+
+typedef struct s_list
+{
+    struct s_list *next;
+    void          *data;
+} t_list;
+
+
+int	ft_list_size(t_list *begin_list);
+
+
+int	main(void)
+{
+	int n = 0;
+
+	t_list *c = malloc(sizeof(*c));
+	c->next = 0;
+	c->data = &n;
+
+	t_list *b = malloc(sizeof(*b));
+	b->next = c;
+	b->data = &n;
+
+	t_list *a = malloc(sizeof(*a));
+	a->next = b;
+	a->data = &n;
+
+	printf("%d\n", ft_list_size(a));
+} */
+```
+</details>
+
+---
+### ft_range
+```
+Assignment name  : ft_range
+Expected files   : ft_range.c
+Allowed functions: malloc
+--------------------------------------------------------------------------------
+
+Write the following function:
+
+int     *ft_range(int start, int end);
+
+It must allocate (with malloc()) an array of integers, fill it with consecutive
+values that begin at start and end at end (Including start and end !), then
+return a pointer to the first value of the array.
+
+Examples:
+
+- With (1, 3) you will return an array containing 1, 2 and 3.
+- With (-1, 2) you will return an array containing -1, 0, 1 and 2.
+- With (0, 0) you will return an array containing 0.
+- With (0, -3) you will return an array containing 0, -1, -2 and -3.
+```
+
+<details>
+  <summary>Answer ft_range gitbook</summary>
+  
+```c
+int *ft_range(int start, int end)
+{
+    int i = 0;
+    // Defining the lenght of the range
+    // Since we don't have access to the abs function, we have
+    // to make a manual absolute value
+    int len = (end - start) < 0 ? ((end - start) * -1) + 1 : (end - start) + 1;
+    // Allocating the range needed
+    int *range = (int *) malloc(len * sizeof(int));
+    
+    // Fill in the range
+    while (i < len)
+    {
+        // Next lines are for numbers going up
+        if (start < end)
+            range[i] = start++;
+        // Next lines are for numbers going down
+        else
+            range[i] = start--;
+        i++;
+    }
+    // Returning the filled range
+    return (range);
+}
+```
+</details>
+
+<details>
+  <summary>Answer ft_range pasqualerossi</summary>
+  
+```c
+#include <stdlib.h>
+
+int *ft_range(int start, int end)
+{
+	int i = 0;
+	int len = abs((end - start)) + 1;
+	int *res = (int *)malloc(sizeof(int) * len);
+	
+	while (i < len)
+	{
+		if (start < end)
+		{
+			res[i] = start;
+			start++;
+			i++;
+		}
+		else
+		{
+			res[i] = start;
+			start--;
+			i++;
+		}
+	}
+        return (res);
+}
+```
+</details>
+
+<details>
+  <summary>Answer ft_range emreakdik/jcluzet</summary>
+  
+```c
+#include <stdlib.h>
+#include <stdio.h>
+
+int	*ft_range(int start, int end)
+{
+	int	size;
+	int	*res;
+	int	i;
+
+	size = abs((end - start)) + 1;
+	res = malloc(size * sizeof(int));
+	if (!res)
+		return (NULL);
+	i = 0;
+	if (start < end)
+	{
+		while (start <= end)
+		{
+			res[i] = start;
+			start += 1;
+			i += 1;
+		}
+	}
+	else
+	{
+		while (start >= end)
+		{
+			res[i] = start;
+			start -= 1;
+			i += 1;
+		}
+	}
+	return (res);
+}
+
+/* #include <stdio.h>
+#include <stdlib.h>
+
+int *ft_range(int start, int end);
+
+int main(int argc, char **argv)
+{
+	(void)argc;
+	int	arr_len;
+	int	*arr;
+
+	arr_len = abs(atoi(argv[2]) - atoi(argv[1]));
+	arr = ft_range(atoi(argv[1]), atoi(argv[2]));
+	for (int i = 0; i <= arr_len; i += 1)
+		printf("%d\n", arr[i]);
+	free(arr);
+	return (EXIT_SUCCESS);
+} */
+```
+</details>
+
+---
+### ft_rrange
+```
+Assignment name  : ft_rrange
+Expected files   : ft_rrange.c
+Allowed functions: malloc
+--------------------------------------------------------------------------------
+
+Write the following function:
+
+int     *ft_rrange(int start, int end);
+
+It must allocate (with malloc()) an array of integers, fill it with consecutive
+values that begin at end and end at start (Including start and end !), then
+return a pointer to the first value of the array.
+
+Examples:
+
+- With (1, 3) you will return an array containing 3, 2 and 1
+- With (-1, 2) you will return an array containing 2, 1, 0 and -1.
+- With (0, 0) you will return an array containing 0.
+- With (0, -3) you will return an array containing -3, -2, -1 and 0.
+```
+
+<details>
+  <summary>Answer ft_rrange gitbook</summary>
+  
+```c
+int *ft_rrange(int start, int end)
+{
+    int i = 0;
+    // Defining the length of the range
+    // Since we don't have access to the abse function, we have
+    // to make a manual absolute value
+    int len = (end - start) < 0 ? ((end - start) * -1) + 1 : (end - start) + 1;
+    // Allocating the range needed
+    int *range = (int *) malloc(len * sizeof(int));
+    
+    // Fill in the range
+    while (i < len)
+    {
+        // Next lines are for numbers going up
+        if (end < start)
+            range[i] = end++;
+        // Next lines are for numbers going down
+        else
+            range[i] = end--;
+        i++;
+    }
+    // Returning the filled range
+    return (range);
+}
+```
+</details>
+
+<details>
+  <summary>Answer ft_rrange pasqualerossi</summary>
+  
+```c
+#include <stdlib.h>
+
+int *ft_rrange(int start, int end)
+{
+	int *range;
+	int i = 0;
+	int step = 1;
+	int n = end - start;
+
+	if (n < 0)
+		(n *= -1);
+	n++;
+
+	range = (int *)malloc(sizeof(int) * n);
+	if (range)
+	{
+		if (start < end)
+			step = -1;
+		while (i < n)
+		{
+			range[i] = end;
+			end = end + step;
+			i++;
+		}
+	}
+	return (range);
+}
+```
+</details>
+
+<details>
+  <summary>Answer ft_rrange emreakdik/jcluzet</summary>
+  
+```c
+#include <stdlib.h>
+
+int		absolute_value(int n);
+
+int		*ft_rrange(int start, int end)
+{
+	int number_of_ints;
+	int *array;
+	int step;
+	int i;
+
+	number_of_ints = 1 + absolute_value(end - start);
+	array = malloc(sizeof(int) * number_of_ints);
+
+	if (start > end)
+		step = 1;
+	else
+		step = -1;
+
+	i = 0;
+	while (i < number_of_ints)
+	{
+		array[i] = end;
+		end = end + step;
+		++i;
+	}
+	return (array);
+}
+
+/* #include <stdio.h>
+#include <stdlib.h>
+
+int		*ft_rrange(int start, int end);
+int		absolute_value(int n)
+{
+	if (n < 0)
+		return (-n);
+	return (n);
+}
+
+int		main(int argc, char **argv)
+{
+	int start = atoi(argv[1]);
+	int end = atoi(argv[2]);
+
+	int *arr = ft_rrange(start, end);
+
+	int i = 0;
+	while (i < 1 + absolute_value(end - start))
+	{
+		printf("%d", arr[i]);
+        if (i < 1 + absolute_value(end - start) - 1)
+            printf(", ");
+		++i;
+	}
+	printf("\n");
+} */
+```
+</details>
+
+---
+### hidenp
+```
+Assignment name  : hidenp
+Expected files   : hidenp.c
+Allowed functions: write
+--------------------------------------------------------------------------------
+
+Write a program named hidenp that takes two strings and displays 1
+followed by a newline if the first string is hidden in the second one,
+otherwise displays 0 followed by a newline.
+
+Let s1 and s2 be strings. We say that s1 is hidden in s2 if it's possible to
+find each character from s1 in s2, in the same order as they appear in s1.
+Also, the empty string is hidden in any string.
+
+If the number of parameters is not 2, the program displays a newline.
+
+Examples :
+
+$>./hidenp "fgex.;" "tyf34gdgf;'ektufjhgdgex.;.;rtjynur6" | cat -e
+1$
+$>./hidenp "abc" "2altrb53c.sse" | cat -e
+1$
+$>./hidenp "abc" "btarc" | cat -e
+0$
+$>./hidenp | cat -e
+$
+$>
+```
+
+<details>
+  <summary>Answer hidenp gitbook</summary>
+  
+```c
+#include <unistd.h>
+
+int main(int ac, char **av)
+{
+    int i = 0, j = 0;
+    
+    if (ac == 3)
+    {
+        // Looping over s2 only if there is something
+        // in s1
+        while (av[2][j] && av[1][i])
+        {
+            // If current char of s2 equals current char
+            // of s1, advance in s1
+            if (av[2][j] == av[1][i])
+                i++;
+            // advance in s2 every time
+            j++;
+        }
+        // if we reached the end of s1, it's hidden in s2
+        if (av[1][i] == 0)
+            write(1, "1", 1);
+        else
+            write(1, "0", 1);
+    }
+    write(1, "\n", 1);
+}
+```
+</details>
+
+<details>
+  <summary>Answer hidenp pasqualerossi</summary>
+  
+```c
+#include <unistd.h>
+
+int main(int argc, char **argv)
+{
+	int i = 0;
+	int j = 0;
+	
+	if (argc == 3)
+	{
+		while (argv[2][j] && argv[1][i])
+		{
+			if (argv[2][j] == argv[1][i])
+				i++;
+			j++;
+		}
+		if (argv[1][i] == '\0')
+			write(1, "1", 1);
+		else
+			write(1, "0", 1);
+	}
+	write(1, "\n", 1);
+	return (0);
+}
+```
+</details>
+
+<details>
+  <summary>Answer hidenp emreakdik/jcluzet</summary>
+  
+```c
+
+#include <unistd.h>
+
+void	hidenp(char *probe, char *target)
+{
+	while (*probe != '\0')
+	{
+		while (*probe != *target && *target != '\0')
+			++target;
+		if (*target == '\0')
+		{
+			write(1, "0", 1);
+			return;
+		}
+		++target;
+		++probe;
+	}
+	write(1, "1", 1);
+}
+
+int		main(int argc, char **argv)
+{
+	if (argc == 3)
+		hidenp(argv[1], argv[2]);
+	write(1, "\n", 1);
+	return (0);
+}
+```
+</details>
+
+---
+### lcm
+```
+Assignment name  : lcm
+Expected files   : lcm.c
+Allowed functions:
+--------------------------------------------------------------------------------
+
+Write a function who takes two unsigned int as parameters and returns the
+computed LCM of those parameters.
+
+LCM (Lowest Common Multiple) of two non-zero integers is the smallest postive
+integer divisible by the both integers.
+
+A LCM can be calculated in two ways:
+
+- You can calculate every multiples of each integers until you have a common
+multiple other than 0
+
+- You can use the HCF (Highest Common Factor) of these two integers and
+calculate as follows:
+
+	LCM(x, y) = | x * y | / HCF(x, y)
+
+  | x * y | means "Absolute value of the product of x by y"
+
+If at least one integer is null, LCM is equal to 0.
+
+Your function must be prototyped as follows:
+
+  unsigned int    lcm(unsigned int a, unsigned int b);
+```
+
+<details>
+  <summary>Answer lcm gitbook</summary>
+  
+```c
+unsigned int lcm(unsigned int a, unsigned int b)
+{
+    unsigned int g = (a > b) ? a : b;
+    
+    // Check if any of the integer is null
+    if (a == 0 || b == 0)
+    	return (0);
+    
+    while (1)
+    {
+    	// if g is perfectly divisible by both a and b
+    	// this is the lcm
+        if ((g % a == 0) && (g % b == 0))
+            return (g);
+        g++;
+    }
+}
+// Un-comment the following to test
+// #include <stdio.h>
+// #include <stdlib.h>
+// int main(int ac, char **av)
+// {
+// 	if (ac == 3)
+// 	{
+// 		unsigned int m = lcm(atoi(av[1]), atoi(av[2]));
+// 		printf("LCM: %u\n", m);
+// 	}
+// }
+```
+</details>
+
+<details>
+  <summary>Answer lcm pasqualerossi</summary>
+  
+```c
+unsigned int lcm(unsigned int a, unsigned int b)
+{
+	unsigned int n;	
+
+	if (a == 0 || b == 0)
+		return (0);
+	if (a > b)
+		n = a;
+	else
+		n = b;
+	while (1)
+	{
+		if (n % a == 0 && n % b == 0)
+			return (n);
+		++n;
+	}
+}
+```
+</details>
+
+<details>
+  <summary>Answer lcm emreakdik/jcluzet</summary>
+  
+```c
+unsigned int lcm(unsigned int a, unsigned int b)
+{
+	unsigned int n;	
+
+	if (a == 0 || b == 0)
+		return (0);
+	if (a > b)
+		n = a;
+	else
+		n = b;
+	while (1)
+	{
+		if (n % a == 0 && n % b == 0)
+			return (n);
+		++n;
+	}
+}
+
+/* #include <stdio.h>
+#include <stdlib.h>
+
+unsigned int lcm(unsigned int a, unsigned int b);
+
+int main(int ac, char **av){
+	if (ac == 3)
+		printf("%d", lcm(atoi(av[1]), atoi(av[2])));
+	return (0);
+} */
+```
+</details>
+
+---
+### paramsum
+```
+Assignment name  : paramsum
+Expected files   : paramsum.c
+Allowed functions: write
+--------------------------------------------------------------------------------
+
+Write a program that displays the number of arguments passed to it, followed by
+a newline.
+
+If there are no arguments, just display a 0 followed by a newline.
+
+Example:
+
+$>./paramsum 1 2 3 5 7 24
+6
+$>./paramsum 6 12 24 | cat -e
+3$
+$>./paramsum | cat -e
+0$
+$>
+```
+
+<details>
+  <summary>Answer paramsum gitbook</summary>
+  
+```c
+#include <unistd.h>
+
+// Simple putnbr function, we don't need negatives since there
+// will never be less than 0 arguments to a program
+void ft_putnbr(int nbr)
+{
+    if (nbr >= 10)
+        ft_putnbr(nbr / 10);
+    char c = nbr % 10 + '0';
+    write(1, &c, 1);
+}
+
+int main(int ac, char **av)
+{
+    // Casting argv argument to void to get rid of it
+    // since we'll not use it
+    (void) av;
+    // Writing the number of arguments from argc minus 1
+    // The first argument counted is the executable name so
+    // not an argument as for this subject
+    ft_putnbr(ac - 1);
+    write(1, "\n", 1);
+    return (0);
+}
+```
+</details>
+
+<details>
+  <summary>Answer paramsum pasqualerossi</summary>
+  
+```c
+#include <unistd.h>
+
+void	ft_putnbr(int n)
+{
+	char digit;
+
+	if (n >= 10)
+		ft_putnbr(n / 10);
+	digit = (n % 10) + '0';
+	write(1, &digit, 1);
+}
+
+int	main(int argc, char **argv)
+{
+	(void)argv;
+
+	ft_putnbr(argc - 1);
+	write(1, "\n", 1);
+	return (0);
+}
+```
+</details>
+
+<details>
+  <summary>Answer paramsum emreakdik/jcluzet</summary>
+  
+```c
+#include <unistd.h>
+
+void	ft_putnbr(int n)
+{
+	char digit;
+
+	if (n >= 10)
+		ft_putnbr(n / 10);
+
+	digit = (n % 10) + '0';
+	write(1, &digit, 1);
+}
+
+int		main(int argc, char **argv)
+{
+	(void)argv;		// Silence 'unused parameter' error
+
+	ft_putnbr(argc - 1);
+	write(1, "\n", 1);
+
+	return (0);
+}
+```
+</details>
+
+---
+### pgcd
+```
+Assignment name  : pgcd
+Expected files   : pgcd.c
+Allowed functions: printf, atoi, malloc, free
+--------------------------------------------------------------------------------
+
+Write a program that takes two strings representing two strictly positive
+integers that fit in an int.
+
+Display their highest common denominator followed by a newline (It's always a
+strictly positive integer).
+
+If the number of parameters is not 2, display a newline.
+
+Examples:
+
+$> ./pgcd 42 10 | cat -e
+2$
+$> ./pgcd 42 12 | cat -e
+6$
+$> ./pgcd 14 77 | cat -e
+7$
+$> ./pgcd 17 3 | cat -e
+1$
+$> ./pgcd | cat -e
+$
+```
+
+<details>
+  <summary>Answer pgcd gitbook</summary>
+  
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int ac, char **av)
+{
+
+    if (ac == 3)
+    {
+        // I won't explain the whole thing
+	// but if we take 14 and 77 as input we would
+	// have the following (each iteration separated by ;)
+	// 14; 14; 14; 14; 14; 14; 7
+	// 77; 63; 49; 35; 21; 7;  7
+        int number1 = atoi(av[1]);
+        int number2 = atoi(av[2]);
+        
+        if (number1 > 0 && number2 > 0)
+        {
+            while (number1 != number2)
+            {
+                if (number1 > number2)
+                    number1 = number1 - number2;
+                else
+                    number2 = number2 - number1;
+            }
+            printf("%d", number1);
+        }
+    }
+    printf("\n");
+}
+```
+</details>
+
+<details>
+  <summary>Answer pgcd pasqualerossi</summary>
+  
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char const *argv[])
+{
+	int nbr1;
+	int nbr2;
+
+	if (argc == 3)
+	{
+		if ((nbr1 = atoi(argv[1])) > 0 && (nbr2 = atoi(argv[2])) > 0)
+		{
+			while (nbr1 != nbr2)
+			{
+				if (nbr1 > nbr2)
+					nbr1 -= nbr2;
+				else
+					nbr2 -= nbr1;
+			}
+			printf("%d", nbr1);
+		}
+	}
+	printf("\n");
+	return (0);
+}
+```
+</details>
+
+<details>
+  <summary>Answer pgcd emreakdik/jcluzet</summary>
+  
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+void	pgcd(int a, int b)
+{
+	int n = a;
+
+	while (n > 0)
+	{
+		if (a % n == 0 && b % n == 0)
+		{
+			printf("%d", n);
+			return;
+		}
+		--n;
+	}
+}
+
+int		main(int argc, char **argv)
+{
+	if (argc == 3)
+		pgcd(atoi(argv[1]), atoi(argv[2]));
+
+	printf("\n");
+	return (0);
+}
+```
+</details>
+
+---
+### print_hex
+```
+Assignment name  : print_hex
+Expected files   : print_hex.c
+Allowed functions: write
+--------------------------------------------------------------------------------
+
+Write a program that takes a positive (or zero) number expressed in base 10,
+and displays it in base 16 (lowercase letters) followed by a newline.
+
+If the number of parameters is not 1, the program displays a newline.
+
+Examples:
+
+$> ./print_hex "10" | cat -e
+a$
+$> ./print_hex "255" | cat -e
+ff$
+$> ./print_hex "5156454" | cat -e
+4eae66$
+$> ./print_hex | cat -e
+$
+```
+
+<details>
+  <summary>Answer print_hex gitbook</summary>
+  
+```c
+#include <unistd.h>
+
+// Simple atoi to convert the parameter to unsigned int
+// You might need to manage negative numbers and all of
+// that, it isn't specified in the subject if they could
+// be sent to your program or not
+unsigned int ft_atoi(char *str)
+{
+    unsigned int res = 0, i = 0;
+
+    while (str[i] && str[i] >= '0' && str[i] <= '9')
+    {
+        res *= 10;
+	res += str[i++] - '0';
+    }
+    return (res);
+}
+
+void put_hex(int nbr)
+{
+    char *digits = "0123456789abcdef";
+
+    if (nbr >= 16)
+        put_hex(nbr / 16);
+    // choosing the char corresponding to the number we want
+    // and writing it to the screen
+    nbr = digits[nbr % 16];
+    write(1, &nbr, 1);
+}
+
+int main(int ac, char **av)
+{
+    // if there is an argument, send it directly to the
+    // put_hex function via ft_atoi
+    if (ac == 2)
+        put_hex(ft_atoi(av[1]));
+    write(1, "\n", 1);
+    return (0);
+}
+```
+</details>
+
+<details>
+  <summary>Answer print_hex pasqualerossi</summary>
+  
+```c
+#include <unistd.h>
+
+int	ft_atoi(char *str)
+{
+	int n = 0;
+
+	while (*str != '\0')
+	{
+		n = n * 10;
+		n = n + *str - '0';
+		++str;
+	}
+	return (n);
+}
+
+void	print_hex(int n)
+{
+	char hex_digits[] = "0123456789abcdef";
+
+	if (n >= 16)
+		print_hex(n / 16);
+	write(1, &hex_digits[n % 16], 1);
+}
+
+int	main(int argc, char **argv)
+{
+	if (argc == 2)
+		print_hex(ft_atoi(argv[1]));
+	write(1, "\n", 1);
+}
+```
+</details>
+
+<details>
+  <summary>Answer print_hex emreakdik/jcluzet</summary>
+  
+```c
+#include <unistd.h>
+
+int		ft_atoi(char *str)
+{
+	int n = 0;
+
+	while (*str != '\0')
+	{
+		n = n * 10;
+		n = n + *str - '0';
+		++str;
+	}
+	return (n);
+}
+
+void	print_hex(int n)
+{
+	char hex_digits[] = "0123456789abcdef";
+
+	if (n >= 16)
+		print_hex(n / 16);
+	write(1, &hex_digits[n % 16], 1);
+}
+
+int		main(int argc, char **argv)
+{
+	if (argc == 2)
+		print_hex(ft_atoi(argv[1]));
+
+	write(1, "\n", 1);
+}
+```
+</details>
+
+---
+### rstr_capitalizer
+```
+Assignment name  : rstr_capitalizer
+Expected files   : rstr_capitalizer.c
+Allowed functions: write
+--------------------------------------------------------------------------------
+
+Write a program that takes one or more strings and, for each argument, puts
+the last character that is a letter of each word in uppercase and the rest
+in lowercase, then displays the result followed by a \n.
+
+A word is a section of string delimited by spaces/tabs or the start/end of the
+string. If a word has a single letter, it must be capitalized.
+
+A letter is a character in the set [a-zA-Z]
+
+If there are no parameters, display \n.
+
+Examples:
+
+$> ./rstr_capitalizer | cat -e
+$
+$> ./rstr_capitalizer "a FiRSt LiTTlE TESt" | cat -e
+A firsT littlE tesT$
+$> ./rstr_capitalizer "SecONd teST A LITtle BiT   Moar comPLEX" "   But... This iS not THAT COMPLEX" "     Okay, this is the last 1239809147801 but not    the least    t" | cat -e
+seconD tesT A littlE biT   moaR compleX$
+   but... thiS iS noT thaT compleX$
+     okay, thiS iS thE lasT 1239809147801 buT noT    thE leasT    T$
+$>
+```
+
+<details>
+  <summary>Answer rstr_capitalizer gitbook</summary>
+  
+```c
+#include <unistd.h>
+
+int ft_isspace(char c)
+{
+    if (c <= 32)
+        return (1);
+    return (0);
+}
+
+void ft_putchar(char c)
+{
+    write(1, &c, 1);
+}
+
+void r_capitalizer(char *s)
+{
+    int i = 0;
+    while (s[i])
+    {
+         // If the character is uppercase, make it lowercase
+         if (s[i] >= 'A' && s[i] <= 'Z')
+             s[i] += 32;
+         // Now check for lowercase character and if the next char
+         // is a space character, make it uppercase again
+         if ((s[i] >= 'a' && s[i] <= 'z') && ft_isspace(s[i + 1]))
+             s[i] -= 32;
+         // Now print every char
+         ft_putchar(s[i++]);
+    }
+}
+
+int main(int ac, char **av)
+{
+    int i = 1;
+    if (ac == 1)
+        ft_putchar('\n');
+    else
+    {
+        // Loop over all params starting at 1 (we don't want the name of
+        // the executable to be written to the screen)
+        while (i < ac)
+        {
+            r_capitalizer(av[i]);
+            ft_putchar('\n');
+            i++;
+        } 
+    }
+}
+```
+</details>
+
+<details>
+  <summary>Answer rstr_capitalizer pasqualerossi</summary>
+  
+```c
+#include <unistd.h>
+
+void    rstr_capitalizer(char *str)
+{
+    int i = 0;
+
+    while (str[i])
+    {
+        if (str[i] >= 'A' && str[i] <= 'Z')
+            str[i] += 32;
+        if ((str[i] >= 'a' && str[i] <= 'z') && (str[i + 1] == ' ' \
+                    || str[i + 1] == '\t' || str[i + 1] == '\0'))
+            str[i] -= 32;
+        write(1, &str[i++], 1);
+    }
+}
+
+int main(int argc, char **argv)
+{
+    int i;
+
+    if (argc == 1)
+        write(1, "\n", 1);
+    else
+    {
+        i = 1;
+        while (i < argc)
+        {
+            rstr_capitalizer(argv[i]);
+            write(1, "\n", 1);
+            i += 1;
+        }
+    }
+    return (0);
+}
+```
+</details>
+
+<details>
+  <summary>Answer rstr_capitalizer emreakdik/jcluzet</summary>
+  
+```c
+#include <unistd.h>
+
+void	str_capitalizer(char *str)
+{
+	while (*str != '\0')
+	{
+		while (*str != '\0' && (*str == ' ' || *str == '\t'))
+		{
+			write(1, str, 1);
+			++str;
+		}
+
+		while (*str != '\0' && *str != ' ' && *str != '\t')
+		{
+			if (*str >= 'a' && *str <= 'z'
+			&& (*(str + 1) == '\0' || *(str + 1) == ' ' || *(str + 1) == '\t'))
+				*str = *str - ('a' - 'A');
+			else if (*str >= 'A' && *str <= 'Z' && *(str + 1) != '\0'
+			&& *(str + 1) != ' ' && *(str + 1) != '\t')
+				*str = *str + ('a' - 'A');
+			write(1, str, 1);
+			++str;
+		}
+	}
+	write(1, "\n", 1);
+}
+
+int		main(int argc, char **argv)
+{
+	if (argc == 1)
+		write(1, "\n", 1);
+	else
+	{
+		int i = 1;
+		while (i < argc)
+		{
+			str_capitalizer(argv[i]);
+			++i;
+		}
+	}
+
+	return (0);
+}
+```
+</details>
+
+---
+### str_capitalizer
+```
+Assignment name  : str_capitalizer
+Expected files   : str_capitalizer.c
+Allowed functions: write
+--------------------------------------------------------------------------------
+
+Write a program that takes one or several strings and, for each argument,
+capitalizes the first character of each word (If it's a letter, obviously),
+puts the rest in lowercase, and displays the result on the standard output,
+followed by a \n.
+
+A "word" is defined as a part of a string delimited either by spaces/tabs, or
+by the start/end of the string. If a word only has one letter, it must be
+capitalized.
+
+If there are no arguments, the progam must display \n.
+
+Example:
+
+$> ./str_capitalizer | cat -e
+$
+$> ./str_capitalizer "a FiRSt LiTTlE TESt" | cat -e
+A First Little Test$
+$> ./str_capitalizer "__SecONd teST A LITtle BiT   Moar comPLEX" "   But... This iS not THAT COMPLEX" "     Okay, this is the last 1239809147801 but not    the least    t" | cat -e
+__second Test A Little Bit   Moar Complex$
+   But... This Is Not That Complex$
+     Okay, This Is The Last 1239809147801 But Not    The Least    T$
+$>
+```
+
+<details>
+  <summary>Answer str_capitalizer gitbook</summary>
+  
+```c
+#include <unistd.h>
+
+int ft_isspace(char c)
+{
+    if (c <= 32)
+        return (1);
+    return (0);
+}
+
+void ft_putchar(char c)
+{
+    write(1, &c, 1);
+}
+
+void capitalizer(char *s)
+{
+    int i = 0;
+    while (s[i])
+    {
+         // If the character is uppercase, make it lowercase
+         if (s[i] >= 'A' && s[i] <= 'Z')
+             s[i] += 32;
+         // Now check for lowercase character and if the previous char
+         // is a space character, make it uppercase again
+         if ((s[i] >= 'a' && s[i] <= 'z') && ft_isspace(s[i - 1]))
+             s[i] -= 32;
+         // Now print every char
+         ft_putchar(s[i++]);
+    }
+}
+
+int main(int ac, char **av)
+{
+    int i = 1;
+    if (ac == 1)
+        ft_putchar('\n');
+    else
+    {
+        // Loop over all params starting at 1 (we don't want the name of
+        // the executable to be written to the screen)
+        while (i < ac)
+        {
+            capitalizer(av[i]);
+            ft_putchar('\n');
+            i++;
+        } 
+    }
+}
+```
+</details>
+
+<details>
+  <summary>Answer str_capitalizer pasqualerossi</summary>
+  
+```c
+#include <unistd.h>
+
+void	str_capitalizer(char *str)
+{
+	int i = 0;
+
+	if (str[i] >= 'a' && 'z' >= str[i])
+		str[i] -= 32;
+	write(1, &str[i], 1);
+	while (str[++i])
+	{
+		if (str[i] >= 'A' && 'Z' >= str[i])
+			str[i] += 32;
+		if ((str[i] >= 'a' && 'z' >= str[i]) && (str[i - 1] == ' ' || \
+		str[i - 1] == '\t'))
+			str[i] -= 32;
+		write(1, &str[i], 1);
+	}
+}
+
+int main(int argc, char *argv[])
+{
+	int i;
+
+	if (argc < 2)
+		write(1, "\n", 1);
+	else
+	{
+		i = 1;
+		while (i < argc)
+		{
+			str_capitalizer(argv[i]);
+			write(1, "\n", 1);
+			i += 1;
+		}
+	}
+	return (0);
+}
+```
+</details>
+
+<details>
+  <summary>Answer str_capitalizer emreakdik/jcluzet</summary>
+  
+```c
+#include <unistd.h>
+
+void	str_capitalizer(char *str)
+{
+	while (*str != '\0')
+	{
+		while (*str != '\0' && (*str == ' ' || *str == '\t'))
+		{
+			write(1, str, 1);
+			++str;
+		}
+
+		if (*str != '\0')
+		{
+			if (*str >= 'a' && *str <= 'z')
+				*str = *str - ('a' - 'A');
+			write(1, str, 1);
+			++str;
+		}
+
+		while (*str != '\0' && *str != ' ' && *str != '\t')
+		{
+			if (*str >= 'A' && *str <= 'Z')
+				*str = *str + ('a' - 'A');
+			write(1, str, 1);
+			++str;
+		}
+	}
+	write(1, "\n", 1);
+}
+
+int		main(int argc, char **argv)
+{
+	if (argc == 1)
+		write(1, "\n", 1);
+	else
+	{
+		int i = 1;
+		while (i < argc)
+		{
+			str_capitalizer(argv[i]);
+			++i;
+		}
+	}
+
+	return (0);
+}
+```
+</details>
+
+---
+### tab_mult
+```
+Assignment name  : tab_mult
+Expected files   : tab_mult.c
+Allowed functions: write
+--------------------------------------------------------------------------------
+
+Write a program that displays a number's multiplication table.
+
+The parameter will always be a strictly positive number that fits in an int,
+and said number times 9 will also fit in an int.
+
+If there are no parameters, the program displays \n.
+
+Examples:
+
+$>./tab_mult 9
+1 x 9 = 9
+2 x 9 = 18
+3 x 9 = 27
+4 x 9 = 36
+5 x 9 = 45
+6 x 9 = 54
+7 x 9 = 63
+8 x 9 = 72
+9 x 9 = 81
+$>./tab_mult 19
+1 x 19 = 19
+2 x 19 = 38
+3 x 19 = 57
+4 x 19 = 76
+5 x 19 = 95
+6 x 19 = 114
+7 x 19 = 133
+8 x 19 = 152
+9 x 19 = 171
+$>
+$>./tab_mult | cat -e
+$
+$>
+```
+
+<details>
+  <summary>Answer tab_mult gitbook</summary>
+  
+```c
+#include <unistd.h>
+
+// Simple atoi since we'll always get a strictly positive integer
+int ft_atoi(char *s)
+{
+    int res = 0, i = 0;
+    while (s[i] && s[i] >= 48 && s[i] <= 57)
+    {
+        res *= 10;
+        res += s[i] - 48;
+        i++;
+    }
+    return (res);
+}
+
+// Simple putnbr since we'll always get a strictly positive integer
+void ft_putnbr(int nbr)
+{
+    if (nbr >= 10)
+        ft_putnbr(nbr / 10);
+    char c = nbr % 10 + '0';
+    write(1, &c, 1);
+}
+
+void ft_putstr(char *s)
+{
+    int i = 0;
+    while (s[i])
+        write(1, &s[i++], 1);
+}
+
+int main(int ac, char **av)
+{
+    if (ac != 2)
+    {
+        write(1, "\n", 1);
+        return (0);
+    }
+    int i = 1, n = ft_atoi(av[1]);
+    // Loop from 1 to 9
+    // and print each line in the format [i x n = i*n]
+    while (i < 10)
+    {
+        ft_putnbr(i);
+        ft_putstr(" x ");
+        ft_putnbr(n);
+        ft_putstr(" = ");
+        ft_putnbr(i * n);
+        write(1, "\n", 1);
+        i++
+    }
+}
+```
+</details>
+
+<details>
+  <summary>Answer tab_mult pasqualerossi</summary>
+  
+```c
+#include <unistd.h>
+
+int	ft_atoi(char *str)
+{
+	int result;
+	int sign;
+
+	result = 0;
+	sign = 1;
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
+	if (*str == '-')
+		sign = -1;
+	if (*str == '-' || *str == '+')
+		str++;
+	while (*str >= '0' && *str <= '9')
+	{
+		result = result * 10 + *str - '0';
+		str++;
+	}
+	return (sign * result);
+}
+
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+void	ft_putnbr(int nb)
+{
+	if (nb == -2147483648)
+	{
+		ft_putchar('-');
+		ft_putchar('2');
+		nb = (nb % 1000000000 * -1);
+	}
+	if (nb < 0)
+	{
+		ft_putchar('-');
+		nb = (nb * -1);
+	}
+	if (nb / 10 > 0)
+		ft_putnbr(nb / 10);
+	ft_putchar(nb % 10 + '0');
+}
+
+int	main(int argc, char *argv[])
+{
+	int	i;
+	int	nbr;
+
+	if (argc != 2)
+		write(1, "\n", 1);
+	else
+	{
+		i = 1;
+		nbr = ft_atoi(argv[1]);
+		while (i <= 9)
+		{
+			ft_putnbr(i);
+			write(1, " x ", 3);
+			ft_putnbr(nbr);
+			write(1, " = ", 3);
+			ft_putnbr(i * nbr);
+			write(1, "\n", 1);
+			i += 1;
+		}
+	}
+	return (0);
+}
+```
+</details>
+
+<details>
+  <summary>Answer tab_mult emreakdik/jcluzet</summary>
+  
+```c
+#include <unistd.h>
+
+int		ft_atoi(char *str)
+{
+	int n = 0;
+
+	while (*str >= '0' && *str <= '9')
+	{
+		n = n * 10;
+		n = n + *str - '0';
+		++str;
+	}
+	return (n);
+}
+
+void	ft_putnbr(int n)
+{
+	if (n >= 10)
+		ft_putnbr(n / 10);
+
+	char c = (n % 10) + '0';
+	write(1, &c, 1);
+}
+
+void	tab_mult(char *str)
+{
+	int n;
+	int i = 1;
+
+	n = ft_atoi(str);
+	while (i <= 9)
+	{
+		ft_putnbr(i);
+		write(1, " x ", 3);
+		ft_putnbr(n);
+		write(1, " = ", 3);
+		ft_putnbr(i * n);
+		write(1, "\n", 1);
+		++i;
+	}
+}
+
+int		main(int argc, char **argv)
+{
+	if (argc == 2)
+		tab_mult(argv[1]);
+	else
+		write(1, "\n", 1);
+	return (0);
+}
+```
+</details>
 
 ---
 ---
 ## Lvl 4
 
-### template
+### flood_fill
 ```
-template
+Assignment name  : flood_fill
+Expected files   : *.c, *.h
+Allowed functions: -
+--------------------------------------------------------------------------------
+
+Write a function that takes a char ** as a 2-dimensional array of char, a
+t_point as the dimensions of this array and a t_point as the starting point.
+
+Starting from the given 'begin' t_point, this function fills an entire zone
+by replacing characters inside with the character 'F'. A zone is an group of
+the same character delimitated horizontally and vertically by other characters
+or the array boundry.
+
+The flood_fill function won't fill diagonally.
+
+The flood_fill function will be prototyped like this:
+  void  flood_fill(char **tab, t_point size, t_point begin);
+
+The t_point structure is prototyped like this:
+
+  typedef struct  s_point
+  {
+    int           x;
+    int           y;
+  }               t_point;
+
+Example:
+
+$> cat test.c
+#include <stdlib.h>
+#include <stdio.h>
+#include "flood_fill.h"
+
+char** make_area(char** zone, t_point size)
+{
+	char** new;
+
+	new = malloc(sizeof(char*) * size.y);
+	for (int i = 0; i < size.y; ++i)
+	{
+		new[i] = malloc(size.x + 1);
+		for (int j = 0; j < size.x; ++j)
+			new[i][j] = zone[i][j];
+		new[i][size.x] = '\0';
+	}
+
+	return new;
+}
+
+int main(void)
+{
+	t_point size = {8, 5};
+	char *zone[] = {
+		"11111111",
+		"10001001",
+		"10010001",
+		"10110001",
+		"11100001",
+	};
+
+	char**  area = make_area(zone, size);
+	for (int i = 0; i < size.y; ++i)
+		printf("%s\n", area[i]);
+	printf("\n");
+
+	t_point begin = {7, 4};
+	flood_fill(area, size, begin);
+	for (int i = 0; i < size.y; ++i)
+		printf("%s\n", area[i]);
+	return (0);
+}
+
+$> gcc flood_fill.c test.c -o test; ./test
+11111111
+10001001
+10010001
+10110001
+11100001
+
+FFFFFFFF
+F000F00F
+F00F000F
+F0FF000F
+FFF0000F
+$>
 ```
 
 <details>
   <summary>Answer template</summary>
   
 ```c
-#include <unistd.h>
+int
+```
+</details>
 
-int main (int argc, char **argv)
-{
-	return(0)
-}
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
 ```
 </details>
 
 ---
+
+### fprime
+```
+Assignment name  : fprime
+Expected files   : fprime.c
+Allowed functions: printf, atoi
+--------------------------------------------------------------------------------
+
+Write a program that takes a positive int and displays its prime factors on the
+standard output, followed by a newline.
+
+Factors must be displayed in ascending order and separated by '*', so that
+the expression in the output gives the right result.
+
+If the number of parameters is not 1, simply display a newline.
+
+The input, when there is one, will be valid.
+
+Examples:
+
+$> ./fprime 225225 | cat -e
+3*3*5*5*7*11*13$
+$> ./fprime 8333325 | cat -e
+3*3*5*5*7*11*13*37$
+$> ./fprime 9539 | cat -e
+9539$
+$> ./fprime 804577 | cat -e
+804577$
+$> ./fprime 42 | cat -e
+2*3*7$
+$> ./fprime 1 | cat -e
+1$
+$> ./fprime | cat -e
+$
+$> ./fprime 42 21 | cat -e
+$
+
+```
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+---
+
+### ft_itoa
+```
+Assignment name  : ft_itoa
+Expected files   : ft_itoa.c
+Allowed functions: malloc
+--------------------------------------------------------------------------------
+
+Write a function that takes an int and converts it to a null-terminated string.
+The function returns the result in a char array that you must allocate.
+
+Your function must be declared as follows:
+
+char	*ft_itoa(int nbr);```
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+---
+
+### ft_list_foreach
+```
+Assignment name  : ft_list_foreach
+Expected files   : ft_list_foreach.c, ft_list.h
+Allowed functions:
+--------------------------------------------------------------------------------
+
+Write a function that takes a list and a function pointer, and applies this
+function to each element of the list.
+
+It must be declared as follows:
+
+void    ft_list_foreach(t_list *begin_list, void (*f)(void *));
+
+The function pointed to by f will be used as follows:
+
+(*f)(list_ptr->data);
+
+You must use the following structure, and turn it in as a file called
+ft_list.h:
+
+typedef struct    s_list
+{
+    struct s_list *next;
+    void          *data;
+}                 t_list;
+```
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+---
+
+### ft_list_remove_if
+```
+Assignment name  : ft_list_remove_if
+Expected files   : ft_list_remove_if.c
+Allowed functions: free
+--------------------------------------------------------------------------------
+
+Write a function called ft_list_remove_if that removes from the
+passed list any element the data of which is "equal" to the reference data.
+
+It will be declared as follows :
+
+void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
+
+cmp takes two void* and returns 0 when both parameters are equal.
+
+You have to use the ft_list.h file, which will contain:
+
+$>cat ft_list.h
+typedef struct      s_list
+{
+    struct s_list   *next;
+    void            *data;
+}                   t_list;
+$>
+```
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+---
+
+### ft_split
+```
+Assignment name  : ft_split
+Expected files   : ft_split.c
+Allowed functions: malloc
+--------------------------------------------------------------------------------
+
+Write a function that takes a string, splits it into words, and returns them as
+a NULL-terminated array of strings.
+
+A "word" is defined as a part of a string delimited either by spaces/tabs/new
+lines, or by the start/end of the string.
+
+Your function must be declared as follows:
+
+char    **ft_split(char *str);
+```
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+---
+
+### rev_wstr
+```
+Assignment name  : rev_wstr
+Expected files   : rev_wstr.c
+Allowed functions: write, malloc, free
+--------------------------------------------------------------------------------
+
+Write a program that takes a string as a parameter, and prints its words in
+reverse order.
+
+A "word" is a part of the string bounded by spaces and/or tabs, or the
+begin/end of the string.
+
+If the number of parameters is different from 1, the program will display
+'\n'.
+
+In the parameters that are going to be tested, there won't be any "additional"
+spaces (meaning that there won't be additionnal spaces at the beginning or at
+the end of the string, and words will always be separated by exactly one space).
+
+Examples:
+
+$> ./rev_wstr "You hate people! But I love gatherings. Isn't it ironic?" | cat -e
+ironic? it Isn't gatherings. love I But people! hate You$
+$>./rev_wstr "abcdefghijklm"
+abcdefghijklm
+$> ./rev_wstr "Wingardium Leviosa" | cat -e
+Leviosa Wingardium$
+$> ./rev_wstr | cat -e
+$
+$>
+
+```
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+---
+
+### rostring
+```
+Assignment name  : rostring
+Expected files   : rostring.c
+Allowed functions: write, malloc, free
+--------------------------------------------------------------------------------
+
+Write a program that takes a string and displays this string after rotating it
+one word to the left.
+
+Thus, the first word becomes the last, and others stay in the same order.
+
+A "word" is defined as a part of a string delimited either by spaces/tabs, or
+by the start/end of the string.
+
+Words will be separated by only one space in the output.
+
+If there's less than one argument, the program displays \n.
+
+Example:
+
+$>./rostring "abc   " | cat -e
+abc$
+$>
+$>./rostring "Que la      lumiere soit et la lumiere fut"
+la lumiere soit et la lumiere fut Que
+$>
+$>./rostring "     AkjhZ zLKIJz , 23y"
+zLKIJz , 23y AkjhZ
+$>
+$>./rostring "first" "2" "11000000"
+first
+$>
+$>./rostring | cat -e
+$
+$>
+```
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+---
+
+### sort_int_tab
+```
+Assignment name  : sort_int_tab
+Expected files   : sort_int_tab.c
+Allowed functions:
+--------------------------------------------------------------------------------
+
+Write the following function:
+
+void sort_int_tab(int *tab, unsigned int size);
+
+It must sort (in-place) the 'tab' int array, that contains exactly 'size'
+members, in ascending order.
+
+Doubles must be preserved.
+
+Input is always coherent.
+```
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+---
+
+### sort_list
+```
+Assignment name  : sort_list
+Expected files   : sort_list.c
+Allowed functions:
+--------------------------------------------------------------------------------
+
+Write the following functions:
+
+t_list	*sort_list(t_list* lst, int (*cmp)(int, int));
+
+This function must sort the list given as a parameter, using the function
+pointer cmp to select the order to apply, and returns a pointer to the
+first element of the sorted list.
+
+Duplications must remain.
+
+Inputs will always be consistent.
+
+You must use the type t_list described in the file list.h
+that is provided to you. You must include that file
+(#include "list.h"), but you must not turn it in. We will use our own
+to compile your assignment.
+
+Functions passed as cmp will always return a value different from
+0 if a and b are in the right order, 0 otherwise.
+
+For example, the following function used as cmp will sort the list
+in ascending order:
+
+int ascending(int a, int b)
+{
+	return (a <= b);
+}
+```
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+<details>
+  <summary>Answer template</summary>
+  
+```c
+int
+```
+</details>
+
+---
+---
+## Sources
+- https://42-cursus.gitbook.io/guide/exams/exam-rank-02
+- https://github.com/pasqualerossi/42-School-Exam-Rank-02
+- https://github.com/emreakdik/42ExamPractice
+- https://github.com/JCluzet/42_EXAM/tree/main/.subjects/STUD_PART/exam_02
