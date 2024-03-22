@@ -5730,18 +5730,200 @@ $>
 ```
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer flood_fill pasqualerossi</summary>
   
 ```c
-int
+// flood_fill.c
+typedef struct	s_point
+{
+	int			x;
+	int			y;
+}				t_point;
+
+void	fill(char **tab, t_point size, t_point cur, char to_fill)
+{
+	if (cur.y < 0 || cur.y >= size.y || cur.x < 0 || cur.x >= size.x
+		|| tab[cur.y][cur.x] != to_fill)
+		return;
+
+	tab[cur.y][cur.x] = 'F';
+	fill(tab, size, (t_point){cur.x - 1, cur.y}, to_fill);
+	fill(tab, size, (t_point){cur.x + 1, cur.y}, to_fill);
+	fill(tab, size, (t_point){cur.x, cur.y - 1}, to_fill);
+	fill(tab, size, (t_point){cur.x, cur.y + 1}, to_fill);
+}
+
+void	flood_fill(char **tab, t_point size, t_point begin)
+{
+	fill(tab, size, begin, tab[begin.y][begin.x]);
+}
+```
+```c
+// flood_fill.t_point.h
+#ifndef T_POINT_FLOOD_FILL
+# define T_POINT_FLOOD_FILL
+
+typedef struct 	s_point {
+    int 		x;				// x : Width  | x-axis
+    int 		y;				// y : Height | y-axis
+} 				t_point;
+
+#endif
+```
+
+</details>
+
+<details>
+  <summary>Answer flood_fill gitbook</summary>
+  
+```c
+#include "flood_fill.h"
+
+// Recursive function to flood fill an area of a 2D character array
+void fill(char **tab, t_point size, char target, int row, int col)
+{
+    // Check if current row and column values are out of bounds
+    if (row < 0 || col < 0 || row >= size.y || col >= size.x)
+        return;
+    
+    // Check if current cell has already been filled or does not match the target character
+    if (tab[row][col] == 'F' || tab[row][col] != target)
+        return;
+
+    // Mark current cell as filled
+    tab[row][col] = 'F';
+
+    // Recursively fill neighboring cells
+    fill(tab, size, target, row -1, col); // fill cell above
+    fill(tab, size, target, row +1, col); // fill cell below
+    fill(tab, size, target, row, col - 1); // fill cell to the left
+    fill(tab, size, target, row, col + 1); // fill cell to the right
+}
+
+// Function to initiate flood fill from a specified point
+void flood_fill(char **tab, t_point size, t_point begin)
+{
+    char target = tab[begin.y][begin.x]; // Get the character to fill around
+    fill(tab, size, target, begin.y, begin.x); // Start the flood fill from the specified point
+}
+
 ```
 </details>
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer flood_fill jcluzet</summary>
   
 ```c
-int
+// Passed Moulinette 2019.09.01
+
+// This code is heavily influenced by @jochang's solution: github.com/MagicHatJo
+
+typedef struct 	s_point {
+	int			x;				// x : Width  | x-axis
+	int			y;				// y : Height | y-axis
+}				t_point;
+ 
+void	fill(char **tab, t_point size, t_point cur, char to_fill)
+{
+	if (cur.y < 0 || cur.y >= size.y || cur.x < 0 || cur.x >= size.x
+		|| tab[cur.y][cur.x] != to_fill)
+		return;
+
+	tab[cur.y][cur.x] = 'F';
+	fill(tab, size, (t_point){cur.x - 1, cur.y}, to_fill);
+	fill(tab, size, (t_point){cur.x + 1, cur.y}, to_fill);
+	fill(tab, size, (t_point){cur.x, cur.y - 1}, to_fill);
+	fill(tab, size, (t_point){cur.x, cur.y + 1}, to_fill);
+}
+
+void	flood_fill(char **tab, t_point size, t_point begin)
+{
+	fill(tab, size, begin, tab[begin.y][begin.x]);
+
+```
+
+```c
+// main.c
+#include <stdlib.h>
+#include <stdio.h>
+
+typedef struct 	s_point {
+    int 		x;				// x : Width  | x-axis
+    int 		y;				// y : Height | y-axis
+} 				t_point;
+
+void	flood_fill(char **tab, t_point size, t_point begin);
+
+char** make_area(char** zone, t_point size)
+{
+	char** new;
+
+	new = malloc(sizeof(char*) * size.y);
+	for (int i = 0; i < size.y; ++i)
+	{
+		new[i] = malloc(size.x + 1);
+		for (int j = 0; j < size.x; ++j)
+			new[i][j] = zone[i][j];
+		new[i][size.x] = '\0';
+	}
+
+	return new;
+}
+
+int	main(void)
+{
+	t_point size = {8, 5};
+	char *zone1[] = {
+		"11111111",
+		"10000001",
+		"10010101",
+		"10110001",
+		"11101111",
+	};
+	char *zone2[] = {
+		"11111111",
+		"10011001",
+		"10100101",
+		"11000011",
+		"11111111",
+	};
+
+	// Make area arrays
+	char**  area1 = make_area(zone1, size);
+	char**  area2 = make_area(zone1, size);
+	char**  area3 = make_area(zone2, size);
+	// Present map 1
+	printf("Map 1\n");
+	for (int i = 0; i < size.y; ++i)
+		printf("%s\n", area1[i]);
+	printf("\n");
+	// Assign starting points
+	t_point begin1 = {7, 4};
+	t_point begin2 = {3, 1};
+	t_point begin3 = {0, 0};
+	// Perform first two operations
+	flood_fill(area1, size, begin1);
+	flood_fill(area2, size, begin2);
+	printf("Start (7, 4)\n");
+	for (int i = 0; i < size.y; ++i)
+		printf("%s\n", area1[i]);
+	printf("\n");
+	printf("Start (3, 1)\n");
+	for (int i = 0; i < size.y; ++i)
+		printf("%s\n", area2[i]);
+	printf("\n-----------\n");
+	// Present map 2
+	printf("Map 2\n");
+	for (int i = 0; i < size.y; ++i)
+		printf("%s\n", area3[i]);
+	printf("\n");
+	// Perform third operation
+	flood_fill(area3, size, begin3);
+	printf("Start (0, 0)\n");
+	for (int i = 0; i < size.y; ++i)
+		printf("%s\n", area3[i]);
+	return (0);
+}
 ```
 </details>
 
@@ -5786,18 +5968,95 @@ $
 ```
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer fprime pasqualerossi</summary>
   
 ```c
-int
+#include <stdio.h>
+#include <stdlib.h>
+
+int	main(int argc, char *argv[])
+{
+	int	i;
+	int	number;
+
+	if (argc == 2)
+	{
+		i = 1;
+		number = atoi(argv[1]);
+		if (number == 1)
+			printf("1");
+		while (number >= ++i)
+		{
+			if (number % i == 0)
+			{
+				printf("%d", i);
+				if (number == i)
+					break ;
+				printf("*");
+				number /= i;
+				i = 1;
+			}
+		}
+	}
+	printf("\n");
+	return (0);
+}
 ```
 </details>
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer fprime emreakdik/jcluzet</summary>
   
 ```c
-int
+#include <stdio.h>
+#include <stdlib.h>
+
+int		is_prime(int n)
+{
+	int i = 2;
+
+	while (i < n)
+	{
+		if (n % i == 0)
+			return (0);
+		++i;
+	}
+	return (1);
+}
+
+void	fprime(char *str)
+{
+	int n = atoi(str);
+	int factor = 2;
+	int first = 1;
+
+	if (n == 1)
+		printf("1");
+
+	while (factor <= n)
+	{
+		if (n % factor == 0 && is_prime(factor))
+		{
+			if (first == 1)
+				printf("%d", factor);
+			else
+				printf("*%d", factor);
+			first = 0;
+			n = n / factor;
+		}
+		else
+			++factor;
+	}
+}
+
+int		main(int argc, char **argv)
+{
+	if (argc == 2)
+		fprime(argv[1]);
+
+	printf("\n");
+	return (0);
+}
 ```
 </details>
 
@@ -5816,20 +6075,113 @@ The function returns the result in a char array that you must allocate.
 Your function must be declared as follows:
 
 char	*ft_itoa(int nbr);```
+```
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer ft_itoa pasqualerossi</summary>
   
 ```c
-int
+#include <stdio.h>
+#include <stdlib.h>
+
+char *ft_itoa(int nbr) 
+{
+	if(nbr == -2147483648)
+		return("-2147483648\0");
+	int n = nbr;
+	int len = 0;
+	if (nbr <= 0)
+	{
+		len++;
+    	}
+	while (n) 
+	{
+		n /= 10;
+		len++;
+	}
+	char *result = (char *)malloc(sizeof(char) * (len + 1));
+	if (result == NULL) 
+		return NULL;
+	result[len] = '\0';
+	if (nbr == 0)
+	{
+		result[0] = '0';
+		return(result);
+	}
+	if (nbr < 0) 
+	{
+		result[0] = '-';
+		nbr = -nbr;
+	}
+	while (nbr) 
+	{
+		result[--len] = nbr % 10 + '0';
+		nbr /= 10;
+	}
+	return result;
+}
 ```
 </details>
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer ft_itoa emreakdik/jcluzet</summary>
   
 ```c
-int
+
+#include <stdlib.h>
+
+int		absolute_value(int nbr)
+{
+	if (nbr < 0)
+		return (-nbr);
+	return (nbr);
+}
+
+int		get_len(int nbr)
+{
+	int len = 0;
+	if (nbr <= 0)
+		++len;
+	while (nbr != 0)
+	{
+		++len;
+		nbr = nbr / 10;
+	}
+	return (len);
+}
+
+char	*ft_itoa(int nbr)
+{
+	char *result;
+	int len;
+
+	len = get_len(nbr);
+	result = malloc(sizeof(char) * (len + 1));
+	result[len] = '\0';
+
+	if (nbr < 0)
+		result[0] = '-';
+	else if (nbr == 0)
+		result[0] = '0';
+
+	while (nbr != 0)
+	{
+		--len;
+		result[len] = absolute_value(nbr % 10) + '0';
+		nbr = nbr / 10;
+	}
+	return (result);
+}
+
+/* #include <stdio.h>
+#include <stdlib.h>
+char	*ft_itoa(int nbr);
+
+int main(int argc, char **argv)
+{
+    printf("%s\n", ft_itoa(atoi(argv[1])));
+    return (0);
+} */
 ```
 </details>
 
@@ -5864,18 +6216,107 @@ typedef struct    s_list
 ```
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer ft_list_foreach pasqualerossi</summary>
   
 ```c
-int
+// ft_list_foreach.c
+#include <stdlib.h>
+#include "ft_list.h"
+
+void	ft_list_foreach(t_list *begin_list, void (*f)(void *))
+{
+	t_list *list_ptr;
+
+	list_ptr = begin_list;
+	while (list_ptr)
+	{
+		(*f)(list_ptr->data);
+		list_ptr = list_ptr->next;
+	}
+}
 ```
+```c
+// ft_list.h
+typedef struct    s_list
+{
+    struct s_list *next;
+    void          *data;
+}                 t_list;
+```
+
 </details>
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer ft_list_foreach emreakdik</summary>
   
 ```c
-int
+// ft_list_foreach.c
+#include <stdlib.h>
+#include "ft_list.h"
+
+void	ft_list_foreach(t_list *begin_list, void (*f)(void *))
+{
+	t_list *list_ptr;
+
+	list_ptr = begin_list;
+	while (list_ptr)
+	{
+		(*f)(list_ptr->data);
+		list_ptr = list_ptr->next;
+	}
+}
+
+/* #include <stdlib.h>
+#include <stdio.h>
+#include "ft_list.h"
+
+void ft_putnbr(void *data)
+{
+	int *i;
+
+	i = data;
+	printf("%d", *i);
+}
+
+void ft_list_push_front(t_list **begin_list, void *data)
+{
+	t_list *new;
+
+	new = malloc(sizeof(t_list));
+	new->data = data;
+	new->next = *begin_list;
+	*begin_list = new;
+}
+
+int main()
+{
+	t_list *list;
+	int i;
+	int *data;
+
+	i = 0;
+	list = NULL;
+	while (i < 10)
+	{
+		data = malloc(sizeof(int));
+		*data = i;
+		ft_list_push_front(&list, data);
+		i++;
+	}
+	ft_list_foreach(list, &ft_putnbr);
+	return (0);
+} */
+```
+
+```c
+// ft_list.h
+typedef struct    s_list
+{
+    struct s_list *next;
+    void          *data;
+}                 t_list;
+
+void	ft_list_foreach(t_list *begin_list, void (*f)(void *));
 ```
 </details>
 
@@ -5909,18 +6350,168 @@ $>
 ```
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer ft_list_remove_if pasqualerossi</summary>
   
 ```c
-int
+// Passed Moulinette 2019.09.01
+
+#include <stdlib.h>
+#include "ft_list.h"
+
+void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
+{
+	if (begin_list == NULL || *begin_list == NULL)
+		return;
+
+	t_list *cur = *begin_list;
+
+	if (cmp(cur->data, data_ref) == 0)
+	{
+		*begin_list = cur->next;
+		free(cur);
+		ft_list_remove_if(begin_list, data_ref, cmp);
+	}
+	else // if there is a no else, you cant pass the Moulinette, tryed 2023.09.08
+	{
+		cur = *begin_list;
+		ft_list_remove_if(&cur->next, data_ref, cmp);
+	}
+}
+
+//---------------------------------------------------------------------
+// #include <stdio.h>
+// #include <string.h>
+
+// void	print_list(t_list **begin_list)
+// {
+// 	t_list *cur = *begin_list;
+// 	while (cur != 0)
+// 	{
+// 		printf("%s\n", cur->data);
+// 		cur = cur->next;
+// 	}
+// }
+
+// int		main(void)
+// {
+// 	char straa[] = "String aa";
+// 	t_list *aa = malloc(sizeof(t_list));
+// 	aa->next = 0;
+// 	aa->data = straa;
+
+// 	char strbb[] = "String bb";
+// 	t_list *bb = malloc(sizeof(t_list));
+// 	bb->next = 0;
+// 	bb->data = strbb;
+
+// 	char strcc[] = "String cc";
+// 	t_list *cc = malloc(sizeof(t_list));
+// 	cc->next = 0;
+// 	cc->data = strcc;
+
+// 	char strdd[] = "String dd";
+// 	t_list *dd = malloc(sizeof(t_list));
+// 	dd->next = 0;
+// 	dd->data = strdd;
+
+// 	aa->next = bb;
+// 	bb->next = cc;
+// 	cc->next = dd;
+
+// 	t_list **begin_list = &aa;
+
+// 	print_list(begin_list);
+// 	printf("----------\n");
+// 	ft_list_remove_if(begin_list, straa, strcmp);
+// 	print_list(begin_list);
+// }
 ```
 </details>
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer ft_list_remove_if emreakdik</summary>
   
 ```c
-int
+// ft_list_remove_if.c
+#include <stdlib.h>
+#include "ft_list.h"
+
+void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
+{
+	if (begin_list == NULL || *begin_list == NULL)
+		return;
+
+	t_list *cur = *begin_list;
+
+	if (cmp(cur->data, data_ref) == 0)
+	{
+		*begin_list = cur->next;
+		free(cur);
+		ft_list_remove_if(begin_list, data_ref, cmp);
+	}
+	cur = *begin_list;
+	ft_list_remove_if(&cur->next, data_ref, cmp);
+}
+
+/* #include <stdio.h>
+#include <string.h>
+#include "ft_list.h"
+#include <stdlib.h>
+
+void	print_list(t_list **begin_list)
+{
+	t_list *cur = *begin_list;
+	while (cur != 0)
+	{
+		printf("%s\n", cur->data);
+		cur = cur->next;
+	}
+}
+
+int		main(void)
+{
+	char straa[] = "String aa";
+	t_list *aa = malloc(sizeof(t_list));
+	aa->next = 0;
+	aa->data = straa;
+
+	char strbb[] = "String bb";
+	t_list *bb = malloc(sizeof(t_list));
+	bb->next = 0;
+	bb->data = strbb;
+
+	char strcc[] = "String cc";
+	t_list *cc = malloc(sizeof(t_list));
+	cc->next = 0;
+	cc->data = strcc;
+
+	char strdd[] = "String dd";
+	t_list *dd = malloc(sizeof(t_list));
+	dd->next = 0;
+	dd->data = strdd;
+
+	aa->next = bb;
+	bb->next = cc;
+	cc->next = dd;
+
+	t_list **begin_list = &aa;
+
+	print_list(begin_list);
+	printf("----------\n");
+	ft_list_remove_if(begin_list, straa, strcmp);
+	print_list(begin_list);
+} */
+```
+
+```c
+// ft_list.h
+typedef struct      s_list
+{
+    struct s_list   *next;
+    void            *data;
+}                   t_list;
+
+void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
 ```
 </details>
 
@@ -5945,18 +6536,160 @@ char    **ft_split(char *str);
 ```
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer ft_split pasqualerossi</summary>
   
 ```c
-int
+#include <stdlib.h>
+#include <stdio.h>
+
+char *ft_strncpy(char *s1, char *s2, int n)
+{
+	int i = -1;
+
+	while (++i < n && s2[i])
+		s1[i] = s2[i];
+	s1[i] = '\0';
+	return (s1);
+}
+
+char	**ft_split(char *str)
+{
+	int i = 0;
+	int j = 0;
+	int k = 0;
+	int wc = 0;
+	while (str[i])
+	{
+		while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
+			i++;
+		if (str[i])
+			wc++;
+		while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n'))
+			i++;
+	}
+	char **out = (char **)malloc(sizeof(char *) * (wc + 1));
+	i = 0;
+	while (str[i])
+	{
+		while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
+			i++;
+		j = i;
+		while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n'))
+			i++;
+		if (i > j)
+		{
+			out[k] = (char *)malloc(sizeof(char) * ((i - j) + 1));
+			ft_strncpy(out[k++], &str[j], i - j);
+		}
+	}
+	out[k] = NULL;
+	return (out);
+}
 ```
 </details>
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer ft_split emreakdik/jcluzet</summary>
   
 ```c
-int
+#include <stdlib.h>
+
+int	ft_wordlen(char *str)
+{
+	int i = 0;
+
+	while (str[i] != '\0' && str[i] != ' ' && str[i] != '\t' && str[i] != '\n')
+		++i;
+	return (i);
+}
+
+char	*word_dupe(char *str)
+{
+	int i = 0;
+	int len = ft_wordlen(str);
+	char *word = malloc(sizeof(char) * (len + 1));
+	
+	word[len] = '\0';
+	while (i < len)
+	{
+		word[i] = str[i];
+		++i;
+	}
+	return (word);
+}
+
+void	fill_words(char **array, char *str)
+{
+	int word_index = 0;
+	
+	while (*str == ' ' || *str == '\t' || *str == '\n')
+		++str;
+	while (*str != '\0')
+	{
+		array[word_index] = word_dupe(str);
+		++word_index;
+		while (*str != '\0' && *str != ' ' && *str != '\t' && *str != '\n')
+			++str;
+		while (*str == ' ' || *str == '\t' || *str == '\n')
+			++str;
+	}
+}
+
+int		count_words(char *str)
+{
+	int num_words = 0;
+	
+	while (*str == ' ' || *str == '\t' || *str == '\n')
+		++str;
+	while (*str != '\0')
+	{
+		++num_words;
+		while (*str != '\0' && *str != ' ' && *str != '\t' && *str != '\n')
+			++str;
+		while (*str == ' ' || *str == '\t' || *str == '\n')
+			++str;
+	}
+	return (num_words);
+}
+
+char	**ft_split(char *str)
+{
+	int		num_words;
+	char	**array;
+	
+	num_words = count_words(str);
+	array = malloc(sizeof(char *) * (num_words + 1));
+	
+	array[num_words] = 0;
+	fill_words(array, str);
+	return (array);
+}
+
+/* #include <stdlib.h>
+#include <stdio.h>
+
+char	**ft_split(char *str);
+
+int main(int argc, char **argv)
+{
+	char	**split;
+	int		i;
+
+	if (argc == 2)
+	{
+		split = ft_split(argv[1]);
+			printf("%s ", split[0]);
+		i = 1;
+		while (split[i] != 0)
+		{
+			printf("%s ", split[i]);
+			i++;
+		}
+		printf("%s", split[i]);
+	}
+	printf("\n");
+    return (0);
+} */
 ```
 </details>
 
@@ -5997,18 +6730,105 @@ $>
 ```
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer rev_wstr pasqualerossi</summary>
   
 ```c
-int
+#include <unistd.h>
+
+int main(int argc, char **argv)
+{
+	int start;
+	int end;
+	int i = 0;
+		
+	if(argc == 2)
+	{   
+		while(argv[1][i] != '\0')
+			i++;
+		while(i >= 0)
+		{
+			while( argv[1][i] == '\0' || argv[1][i] == ' ' || argv[1][i] == '\t')
+				i--;
+			end = i;
+			while(argv[1][i] && argv[1][i] != ' ' && argv[1][i] != '\t')
+				i--;
+			start = i + 1;
+			int  flag;
+			flag = start;
+			while(start <= end)
+			{
+				write (1, &argv[1][start],1);
+				start++;		
+			}
+			if (flag !=0)
+			{
+				write(1, " ", 1);
+			}
+		}
+	}
+	write(1, "\n", 1);
+}
 ```
 </details>
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer rev_wstr emreakdik/jcluzet</summary>
   
 ```c
-int
+#include <unistd.h>
+
+void ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+int ft_strlen(char *str)
+{
+	int i = 0;
+	
+	while (str[i])
+		i++;
+	return (i);
+}
+
+int main(int ac, char *av[])
+{
+	char *tmp;
+	char *rev;
+	int len;
+
+	if (ac == 2)
+	{
+		tmp = av[1];
+		len = ft_strlen(tmp);
+		rev = NULL;
+		len--;
+		while (tmp[len])
+		{
+			if (tmp[len - 1] == ' ')
+			{
+				rev = &tmp[len];
+				while (*rev && *rev != ' ')
+				{
+					ft_putchar(*rev);
+					rev++;
+				}
+				ft_putchar(' ');
+			}
+			else if (len == 0)
+			{
+				rev = &tmp[len];
+				while (*rev && *rev != ' ')
+				{
+					ft_putchar(*rev);
+					rev++;
+				}
+			}
+			len--;
+		}
+	}
+	ft_putchar('\n');
+}
 ```
 </details>
 
@@ -6053,18 +6873,118 @@ $>
 ```
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer rostring pasqualerossi</summary>
   
 ```c
-int
+#include <unistd.h>
+
+int main(int argc, char **argv)
+{
+    int i;
+    int start;
+    int end;
+    int flag;
+
+    flag = 0;
+    if (argc > 1 && argv[1][0])
+    {
+        i = 0;
+        while (argv[1][i] == ' ' || argv[1][i] == '\t')
+            i++;
+        start = i;
+        while (argv[1][i] != '\0' && argv[1][i] != ' ' && argv[1][i] != '\t')
+            i++;
+        end = i;
+        while (argv[1][i] == ' ' || argv[1][i] == '\t')
+            i++;
+        while(argv[1][i]) 
+        {
+            while ((argv[1][i] == ' ' && argv[1][i + 1] == ' ') || (argv[1][i] == '\t' && argv[1][i + 1] == '\t'))
+                i++; 
+            if (argv[1][i] == ' ' || argv[1][i] == '\t')
+                flag = 1; 
+            write(1, &argv[1][i], 1);
+            i++;
+        }
+        if (flag)
+            write(1, " ", 1);
+        while (start < end)
+        {
+            write(1, &argv[1][start], 1);
+            start++;
+        }
+    }
+    write(1, "\n", 1);
+    return(0);
+}
 ```
 </details>
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer rostring emreakdik/jcluzet</summary>
   
 ```c
-int
+#include <unistd.h>
+
+int		skip_whitespace(char *str, int i)
+{
+	while (str[i] == ' ' || str[i] == '\t')
+		++i;
+	return (i);
+}
+
+int		ft_wordlen(char *str)
+{
+	int i = 0;
+
+	while (str[i] != '\0' && str[i] != ' ' && str[i] != '\t')
+		++i;
+	return (i);
+}
+
+int		print_word(char *str, int i, int *is_first)
+{
+	int word_len;
+
+	i = skip_whitespace(str, i);
+	word_len = ft_wordlen(str + i);
+	if (*is_first == 0)
+		write(1, " ", 1);
+	write(1, str + i, word_len);
+	*is_first = 0;
+	return (i + word_len);
+}
+
+int		epur_str(char *str)
+{
+	int i = 0;
+	int is_first = 1;
+
+	i = skip_whitespace(str, i);
+	while (str[i] != '\0')
+	{
+		i = print_word(str, i, &is_first);
+		i = skip_whitespace(str, i);
+	}
+	return (is_first);
+}
+
+int		main(int argc, char **argv)
+{
+	if (argc >= 2)
+	{
+		char *str = argv[1];
+		int i = 0;
+		int is_first;
+
+		i = skip_whitespace(str, i);
+		i = i + ft_wordlen(str + i);
+		is_first = epur_str(str + i);
+		print_word(str, 0, &is_first);
+	}
+	write(1, "\n", 1);
+	return (0);
+}
 ```
 </details>
 
@@ -6090,18 +7010,64 @@ Input is always coherent.
 ```
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer sort_int_tab pasqualerossi</summary>
   
 ```c
-int
+void	sort_int_tab(int *tab, unsigned int size)
+{
+	unsigned int	i = 0;
+	int	temp;
+
+	while (i < (size - 1))
+	{
+		if (tab[i] > tab[i + 1])
+		{
+			temp = tab[i];
+			tab[i] = tab[i+ 1];
+			tab[i + 1] = temp;
+			i = 0;
+		}
+		else
+			i++;
+	}
+}
 ```
 </details>
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer sort_int_tab emreakdik</summary>
   
 ```c
-int
+void	sort_int_tab(int *tab, unsigned int size)
+{
+	unsigned int	i = 0;
+	int	temp;
+
+	while (i < (size - 1))
+	{
+		if (tab[i] > tab[i + 1])
+		{
+			temp = tab[i];
+			tab[i] = tab[i+ 1];
+			tab[i + 1] = temp;
+			i = 0;
+		}
+		else
+			i++;
+	}
+}
+
+/* #include <stdio.h>
+
+void	sort_int_tab(int *tab, unsigned int size);
+
+int main(){
+	int tab[5] = {5, 4, 3, 2, 1};
+	sort_int_tab(tab, 5);
+	for (int i = 0; i < 5; i++)
+		printf("%d ", tab[i]);
+	return 0;
+} */
 ```
 </details>
 
@@ -6144,18 +7110,246 @@ int ascending(int a, int b)
 ```
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer sort_list pasqualerossi</summary>
   
 ```c
-int
+// sort_list.c
+#include <stdlib.h>
+#include "list.h"
+
+t_list	*sort_list(t_list *lst, int (*cmp)(int, int))
+{
+	int	swap;
+	t_list	*tmp;
+
+	tmp = lst;
+	while(lst->next != NULL)
+	{
+		if (((*cmp)(lst->data, lst->next->data)) == 0)
+		{
+			swap = lst->data;
+			lst->data = lst->next->data;
+			lst->next->data = swap;
+			lst = tmp;
+		}
+		else
+			lst = lst->next;
+	}
+	lst = tmp;
+	return (lst);
+}
+```
+```c
+// sort_list.list.h
+typedef struct s_list t_list;
+
+struct s_list
+{
+	int     data;
+	t_list  *next;
+};
 ```
 </details>
 
 <details>
-  <summary>Answer template</summary>
+  <summary>Answer sort_list emreakdik</summary>
   
 ```c
-int
+// sort_list.c
+#include "ft_list.h"
+
+t_list	*sort_list(t_list *lst, int (*cmp)(int, int))
+{
+	int	swap;
+	t_list	*tmp;
+
+	tmp = lst;
+	while(lst->next != NULL)
+	{
+		if (((*cmp)(lst->data, lst->next->data)) == 0)
+		{
+			swap = lst->data;
+			lst->data = lst->next->data;
+			lst->next->data = swap;
+			lst = tmp;
+		}
+		else
+			lst = lst->next;
+	}
+	lst = tmp;
+	return (lst);
+}
+```
+
+```c
+// ft_list.h
+#ifndef FT_LIST_H
+#define FT_LIST_H
+
+#include <stdlib.h>
+#include <stdio.h>
+
+typedef struct s_list t_list;
+
+struct s_list {
+    int data;
+    t_list *next;
+};
+
+t_list	*sort_list(t_list *lst, int (*cmp)(int, int));
+
+#endif
+```
+
+```c
+// main.c
+#include "ft_list.h"
+
+int		croissant(int a, int b) // cmp fonksiyonnu
+{
+	if (a <= b) //1 < 2 = 1
+		return (1);
+	else // 2 > 1 = 0
+		return (0);
+}
+
+int main(void)
+{
+	t_list *lst;
+	
+	lst = (t_list*)malloc(sizeof(t_list));
+	lst->data = 20;
+	lst->next = (t_list*)malloc(sizeof(t_list));
+	lst->next->data = 10;
+	lst->next->next = (t_list*)malloc(sizeof(t_list));
+	lst->next->next->data = 0;
+	lst->next->next->next = NULL;
+
+	lst = sort_list(lst, croissant);
+
+	while (lst != NULL)
+	{
+		printf("%d\n", lst->data);
+	    lst = lst->next;
+	}
+
+	return (0);
+}
+```
+
+```c
+// list.h ???
+t_list	*sort_list(t_list* lst, int (*cmp)(int, int));
+
+typedef struct s_list t_list;
+
+struct s_list
+{
+	int     data;
+	t_list  *next;
+};
+```
+</details>
+
+<details>
+  <summary>Answer sort_list jcluzet</summary>
+  
+```c
+// sort_list.c
+// Passed Moulinette 2019.09.01
+
+#include "list.h"
+
+void	swap_values(t_list *a, t_list *b)
+{
+	int swap = a->data;
+	a->data = b->data;
+	b->data = swap;
+}
+
+t_list	*sort_list(t_list* lst, int (*cmp)(int, int))
+{
+	int swapped = 1;
+	t_list *cur = lst;
+
+	while (swapped == 1)
+	{
+		swapped = 0;
+		while (cur != 0 && cur->next != 0)
+		{
+			if (cmp(cur->data, cur->next->data) == 0)
+			{
+				swap_values(cur, cur->next);
+				swapped = 1;
+			}
+			cur = cur->next;
+		}
+		cur = lst;
+	}
+	return (lst);
+}
+```
+
+```c
+// list.h
+typedef struct s_list t_list;
+
+struct s_list
+{
+	int     data;
+	t_list  *next;
+};
+```
+```c
+// main.c
+#include "list.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+void	swap_values(t_list *a, t_list *b);
+t_list	*sort_list(t_list *lst, int (*cmp)(int, int));
+
+int ascending(int a, int b)
+{
+	return (a <= b);
+}
+
+int	main(void)
+{
+	t_list *c = malloc(sizeof(t_list));
+	c->next = 0;
+	c->data = 45;
+
+	t_list *b = malloc(sizeof(t_list));
+	b->next = c;
+	b->data = 73;
+
+	t_list *a = malloc(sizeof(t_list));
+	a->next = b;
+	a->data = 108;
+
+	t_list *cur = a;
+	while (cur)
+	{
+		printf("%d", cur->data);
+		if (cur->next != 0)
+			printf(", ");
+		cur = cur->next;
+	}
+	printf("\n");
+
+	cur = sort_list(a, ascending);
+
+	// cur = a;
+	while (cur)
+	{
+		printf("%d", cur->data);
+		if (cur->next != 0)
+			printf(", ");
+		cur = cur->next;
+	}
+	printf("\n");
+}
 ```
 </details>
 
