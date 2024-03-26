@@ -1,7 +1,7 @@
 # Exam Rank 2
 
 ## Lvl 1
-### first_word
+### (1) first_word
 ```
 Assignment name  : first_word
 Expected files   : first_word.c
@@ -60,7 +60,7 @@ int main (int argc, char **argv)
 
 ---
 
-### fizzbuzz
+### (2) fizzbuzz
 ```
 Assignment name  : fizzbuzz
 Expected files   : fizzbuzz.c
@@ -140,7 +140,7 @@ int main(void)
 
 ---
 
-### ft_putstr
+### (3) ft_putstr
 ```
 Assignment name  : ft_putstr
 Expected files   : ft_putstr.c
@@ -175,7 +175,7 @@ void	ft_putstr(char *str)
 
 ---
 
-### ft_strcpy
+### (4) ft_strcpy
 ```
 Assignment name  : ft_strcpy
 Expected files   : ft_strcpy.c
@@ -210,7 +210,7 @@ char	*ft_strcpy(char *s1, char *s2)
 
 ---
 
-### ft_strlen
+### (5) ft_strlen
 ```
 Assignment name  : ft_strlen
 Expected files   : ft_strlen.c
@@ -241,7 +241,7 @@ int ft_strlen(char *str)
 
 ---
 
-### ft_swap
+### (6) ft_swap
 ```
 Assignment name  : ft_swap
 Expected files   : ft_swap.c
@@ -271,7 +271,7 @@ void	ft_swap(int *a, int *b)
 
 ---
 
-### repeat_alpha
+### (7) repeat_alpha
 ```
 Assignment name  : repeat_alpha
 Expected files   : repeat_alpha.c
@@ -346,7 +346,7 @@ int main(int ac, char **av)
 
 ---
 
-### rev_print
+### (8) rev_print
 ```
 Assignment name  : rev_print
 Expected files   : rev_print.c
@@ -394,7 +394,7 @@ int	main(int argc, char *argv[])
 
 ---
 
-### rot_13
+### (9) rot_13
 ```
 Assignment name  : rot_13
 Expected files   : rot_13.c
@@ -485,7 +485,7 @@ int main(int ac, char **av)
 
 ---
 
-### rotone
+### (10) rotone
 ```
 Assignment name  : rotone
 Expected files   : rotone.c
@@ -582,7 +582,7 @@ int	main(int ac, char **av)
 </details>
 ---
 
-### search_and_replace
+### (11) search_and_replace
 ```
 Assignment name  : search_and_replace
 Expected files   : search_and_replace.c
@@ -642,7 +642,7 @@ int main(int argc, char **argv)
 
 ---
 
-### ulstr
+### (12) ulstr
 ```
 Assignment name  : ulstr
 Expected files   : ulstr.c
@@ -700,7 +700,7 @@ int		main(int	argc, char **argv)
 
 ## Lvl 2
 
-### alpha_mirror
+### (1) alpha_mirror
 ```
 Assignment name  : alpha_mirror
 Expected files   : alpha_mirror.c
@@ -834,7 +834,7 @@ int	main(int ac, char **av)
 
 ---
 
-### camel_to_snake
+### (2) camel_to_snake
 ```
 Assignment name  : camel_to_snake
 Expected files   : camel_to_snake.c
@@ -960,7 +960,7 @@ int main(int argc, char **argv)
 
 ---
 
-### do_op
+### (3) do_op
 ```
 Assignment name  : do_op
 Expected files   : *.c, *.h
@@ -1114,7 +1114,7 @@ int	main(int ac, char **av)
 
 ---
 
-### ft_atoi
+### (4) ft_atoi
 ```
 Assignment name  : ft_atoi
 Expected files   : ft_atoi.c
@@ -1253,7 +1253,7 @@ int main(int argc, char **argv)
 
 ---
 
-### ft_strcmp
+### (5) ft_strcmp
 ```
 Assignment name  : ft_strcmp
 Expected files   : ft_strcmp.c
@@ -1355,7 +1355,7 @@ int main(int argc, char **argv)
 
 ---
 
-### ft_strcspn
+### (6) ft_strcspn
 ```
 Assignment name	: ft_strcspn
 Expected files	: ft_strcspn.c
@@ -1509,7 +1509,7 @@ int main(int argc, char **argv)
 
 ---
 
-### ft_strdup
+### (7) ft_strdup
 ```
 Assignment name  : ft_strdup
 Expected files   : ft_strdup.c
@@ -1639,7 +1639,7 @@ int main(int argc, char **argv)
 
 ---
 
-### ft_strpbrk
+### (8) ft_strpbrk
 ```
 Assignment name	: ft_strpbrk
 Expected files	: ft_strpbrk.c
@@ -1733,7 +1733,7 @@ char *ft_strpbrk(const char *s1, const char *s2)
 
 ---
 
-### ft_strrev
+### (9) ft_strrev
 ```
 Assignment name  : ft_strrev
 Expected files   : ft_strrev.c
@@ -1846,7 +1846,7 @@ int main(int argc, char **argv)
 
 ---
 
-### ft_strspn
+### (10) ft_strspn
 ```
 Assignment name	: ft_strspn
 Expected files	: ft_strspn.c
@@ -1935,7 +1935,7 @@ size_t	ft_strspn(const char *s, const char *accept)
 
 ---
 
-### inter
+### (11) inter
 ```
 Assignment name  : inter
 Expected files   : inter.c
@@ -2104,7 +2104,7 @@ int	main(int ac, char **av)
 
 ---
 
-### is_power_of_2
+### (12) is_power_of_2
 ```
 Assignment name  : is_power_of_2
 Expected files   : is_power_of_2.c
@@ -2201,7 +2201,7 @@ int main(int argc, char **argv)
 
 ---
 
-### last_word
+### (13) last_word
 ```
 Assignment name  : last_word
 Expected files   : last_word.c
@@ -2334,7 +2334,7 @@ int		main(int argc, char **argv)
 
 ---
 
-### max
+### (14) max
 ```
 Assignment name  : max
 Expected files   : max.c
@@ -2456,7 +2456,7 @@ int main(int argc, char **argv)
 
 ---
 
-### print_bits
+### (15) print_bits
 ```
 Assignment name  : print_bits
 Expected files   : print_bits.c
@@ -2555,7 +2555,7 @@ int main(int ac, char **av)
 
 ---
 
-### reverse_bits
+### (16) reverse_bits
 ```
 Assignment name  : reverse_bits
 Expected files   : reverse_bits.c
@@ -2679,7 +2679,7 @@ int main(int ac, char **av)
 
 ---
 
-### snake_to_camel
+### ((17) snake_to_camel
 ```
 Assignment name  : snake_to_camel
 Expected files   : snake_to_camel.c
@@ -2814,7 +2814,7 @@ int main(int argc, char **argv)
 
 ---
 
-### swap_bits
+### (18) swap_bits
 ```
 Assignment name  : swap_bits
 Expected files   : swap_bits.c
@@ -2896,7 +2896,7 @@ int	main(int argc, char **argv)
 
 ---
 
-### union
+### (19) union
 ```
 Assignment name  : union
 Expected files   : union.c
@@ -3082,7 +3082,7 @@ int check(int c, char *str, int index)
 
 ---
 
-### wdmatch
+### (20) wdmatch
 ```
 Assignment name  : wdmatch
 Expected files   : wdmatch.c
@@ -3220,7 +3220,7 @@ int	main(int argc, char const *argv[])
 ---
 ## Lvl 3
 
-### add_prime_sum
+### (1) add_prime_sum
 ```
 Assignment name  : add_prime_sum
 Expected files   : add_prime_sum.c
@@ -3473,7 +3473,7 @@ int		main(int argc, char **argv)
 </details>
 
 ---
-### epur_str
+### (2) epur_str
 ```
 Assignment name  : epur_str
 Expected files   : epur_str.c
@@ -3643,7 +3643,7 @@ int		main(int argc, char **argv)
 </details>
 
 ---
-### expand_str
+### (3) expand_str
 ```
 Assignment name  : expand_str
 Expected files   : expand_str.c
@@ -3805,7 +3805,7 @@ int		main(int argc, char **argv)
 </details>
 
 ---
-### ft_atoi_base
+### (4) ft_atoi_base
 ```
 Assignment name  : ft_atoi_base
 Expected files   : ft_atoi_base.c
@@ -4035,7 +4035,7 @@ int main(int argc, char **argv)
 </details>
 
 ---
-### ft_list_size
+### (5) ft_list_size
 ```
 Assignment name  : ft_list_size
 Expected files   : ft_list_size.c, ft_list.h
@@ -4148,7 +4148,7 @@ int	main(void)
 </details>
 
 ---
-### ft_range
+### (6) ft_range
 ```
 Assignment name  : ft_range
 Expected files   : ft_range.c
@@ -4295,7 +4295,7 @@ int main(int argc, char **argv)
 </details>
 
 ---
-### ft_rrange
+### (7) ft_rrange
 ```
 Assignment name  : ft_rrange
 Expected files   : ft_rrange.c
@@ -4448,7 +4448,7 @@ int		main(int argc, char **argv)
 </details>
 
 ---
-### hidenp
+### (8) hidenp
 ```
 Assignment name  : hidenp
 Expected files   : hidenp.c
@@ -4577,7 +4577,7 @@ int		main(int argc, char **argv)
 </details>
 
 ---
-### lcm
+### (9) lcm
 ```
 Assignment name  : lcm
 Expected files   : lcm.c
@@ -4704,7 +4704,7 @@ int main(int ac, char **av){
 </details>
 
 ---
-### paramsum
+### (10) paramsum
 ```
 Assignment name  : paramsum
 Expected files   : paramsum.c
@@ -4815,7 +4815,7 @@ int		main(int argc, char **argv)
 </details>
 
 ---
-### pgcd
+### (11) pgcd
 ```
 Assignment name  : pgcd
 Expected files   : pgcd.c
@@ -4947,7 +4947,7 @@ int		main(int argc, char **argv)
 </details>
 
 ---
-### print_hex
+### (12) print_hex
 ```
 Assignment name  : print_hex
 Expected files   : print_hex.c
@@ -5093,7 +5093,7 @@ int		main(int argc, char **argv)
 </details>
 
 ---
-### rstr_capitalizer
+### (13) rstr_capitalizer
 ```
 Assignment name  : rstr_capitalizer
 Expected files   : rstr_capitalizer.c
@@ -5272,7 +5272,7 @@ int		main(int argc, char **argv)
 </details>
 
 ---
-### str_capitalizer
+### (14) str_capitalizer
 ```
 Assignment name  : str_capitalizer
 Expected files   : str_capitalizer.c
@@ -5458,7 +5458,7 @@ int		main(int argc, char **argv)
 </details>
 
 ---
-### tab_mult
+### (15) tab_mult
 ```
 Assignment name  : tab_mult
 Expected files   : tab_mult.c
@@ -5697,7 +5697,7 @@ int		main(int argc, char **argv)
 ---
 ## Lvl 4
 
-### flood_fill
+### (1) flood_fill
 ```
 Assignment name  : flood_fill
 Expected files   : *.c, *.h
@@ -5986,7 +5986,7 @@ int	main(void)
 
 ---
 
-### fprime
+### (2) fprime
 ```
 Assignment name  : fprime
 Expected files   : fprime.c
@@ -6119,7 +6119,7 @@ int		main(int argc, char **argv)
 
 ---
 
-### ft_itoa
+### (3) ft_itoa
 ```
 Assignment name  : ft_itoa
 Expected files   : ft_itoa.c
@@ -6244,7 +6244,7 @@ int main(int argc, char **argv)
 
 ---
 
-### ft_list_foreach
+### (4) ft_list_foreach
 ```
 Assignment name  : ft_list_foreach
 Expected files   : ft_list_foreach.c, ft_list.h
@@ -6379,7 +6379,7 @@ void	ft_list_foreach(t_list *begin_list, void (*f)(void *));
 
 ---
 
-### ft_list_remove_if
+### (5) ft_list_remove_if
 ```
 Assignment name  : ft_list_remove_if
 Expected files   : ft_list_remove_if.c
@@ -6574,7 +6574,7 @@ void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
 
 ---
 
-### ft_split
+### (6) ft_split
 ```
 Assignment name  : ft_split
 Expected files   : ft_split.c
@@ -6752,7 +6752,7 @@ int main(int argc, char **argv)
 
 ---
 
-### rev_wstr
+### (7) rev_wstr
 ```
 Assignment name  : rev_wstr
 Expected files   : rev_wstr.c
@@ -6891,7 +6891,7 @@ int main(int ac, char *av[])
 
 ---
 
-### rostring
+### (8) rostring
 ```
 Assignment name  : rostring
 Expected files   : rostring.c
@@ -7047,7 +7047,7 @@ int		main(int argc, char **argv)
 
 ---
 
-### sort_int_tab
+### (9) sort_int_tab
 ```
 Assignment name  : sort_int_tab
 Expected files   : sort_int_tab.c
@@ -7130,7 +7130,7 @@ int main(){
 
 ---
 
-### sort_list
+### (10) sort_list
 ```
 Assignment name  : sort_list
 Expected files   : sort_list.c
