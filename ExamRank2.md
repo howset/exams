@@ -345,7 +345,7 @@ int main(int ac, char **av)
 </details>
 
 <details>
-  <summary>Answer repeat_alpha jcluzet</summary>
+  <summary>Answer repeat_alpha jcluzet (easier)</summary>
   
 ```c
 #include <unistd.h>
@@ -494,7 +494,7 @@ int	main(int argc, char **argv)
 </details>
 
 <details>
-  <summary>Answer rot_13 jcluzet</summary>
+  <summary>Answer rot_13 jcluzet (easier)</summary>
   
 ```c
 #include <unistd.h>
@@ -592,7 +592,7 @@ int		main(int ac, char **av)
 </details>
 
 <details>
-  <summary>Answer rotone jcluzet</summary>
+  <summary>Answer rotone jcluzet (easier)</summary>
   
 ```c
 #include <unistd.h>
@@ -1088,7 +1088,7 @@ int main(int ac, char *av[])
 </details>
 
 <details>
-  <summary>Answer do_op pasqualerossi</summary>
+  <summary>Answer do_op pasqualerossi (easier)</summary>
   
 ```c
 #include <stdio.h>
@@ -1225,7 +1225,7 @@ int ft_atoi(const char *str)
 </details>
 
 <details>
-  <summary>Answer ft_atoi pasqualerossi</summary>
+  <summary>Answer ft_atoi pasqualerossi (easier)</summary>
   
 ```c
 int	ft_atoi(char *str)
@@ -2166,7 +2166,10 @@ int	    is_power_of_2(unsigned int n);
 int	    is_power_of_2(unsigned int n)
 {
 
-// we will initialize a test variable to 1, and we will multiply it by 2 until it is equal to or greater than the variable we have been given as a parameter (n). If the two variables are equal it means that it is a power of 2 (since we have always multiplied this number by 2)
+// we will initialize a test variable to 1, and we will multiply it by 2 until it is equal to 
+// or greater than the variable we have been given as a parameter (n). If the two variables 
+// are equal it means that it is a power of 2
+// (since we have always multiplied this number by 2)
 	
 	int test = 1;
 
@@ -2176,7 +2179,8 @@ int	    is_power_of_2(unsigned int n)
 			return  (1); // test is a power of 2
 		test = test * 2;
 	}
-	// we will leave the loop if the test variable is greater than n. this means that it is not a power of 2 an we need to return 0.
+	// we will leave the loop if the test variable is greater than n. this means that it is not
+	// a power of 2 an we need to return 0.
 	return (0);
 }
 
@@ -2270,7 +2274,7 @@ $>
 ```
 
 <details>
-  <summary>Answer last_word gitbook</summary>
+  <summary>Answer last_word gitbook (wrong)</summary>
   
 ```c
 #include <unistd.h>
