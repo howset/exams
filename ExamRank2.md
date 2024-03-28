@@ -873,133 +873,7 @@ int	main(int ac, char **av)
 
 ---
 
-### (2) camel_to_snake
-```
-Assignment name  : camel_to_snake
-Expected files   : camel_to_snake.c
-Allowed functions: malloc, realloc, write
---------------------------------------------------------------------------------
-
-Write a program that takes a single string in lowerCamelCase format
-and converts it into a string in snake_case format.
-
-A lowerCamelCase string is a string where each word begins with a capital letter
-except for the first one.
-
-A snake_case string is a string where each word is in lower case, separated by
-an underscore "_".
-
-Examples:
-$>./camel_to_snake "hereIsACamelCaseWord"
-here_is_a_camel_case_word
-$>./camel_to_snake "helloWorld" | cat -e
-hello_world$
-$>./camel_to_snake | cat -e
-$
-```
-
-<details>
-  <summary>Answer camel_to_snake gitbook</summary>
-  
-```c
-#include <unistd.h>
-
-int main(int ac, char *av[])
-{
-    int i;
-    
-    if (ac == 2)
-    {
-        i = 0;
-        /* looping over the whole string
-         */
-        while (av[1][i])
-        {
-            /* if we encounter an upper-case letter
-             * we have to make it lower-case and write a _ before it
-             */
-            if (av[1][i] >= 65 && av[1][i] <= 90)
-            {
-                /* here, we change the upper-case letter to its
-                 * corresponding lower-case letter
-                 */
-                av[1][i] += 32;
-                /* we write a _ to the screen
-                 */
-                write(1, "_", 1);
-            }
-            /* then we can write the current character, changed or not
-             */
-            write(1, &av[1][i], 1);
-            i++;
-        }
-    }
-    /* finally we can write the newline
-     */
-    write(1, "\n", 1);
-}
-```
-</details>
-
-<details>
-  <summary>Answer camel_to_snake pasqualerossi</summary>
-  
-```c
-#include <unistd.h>
-
-int main(int argc, char **argv)
-{
-	int i = 0;
-
-	if (argc == 2)
-	{
-		while(argv[1][i])
-		{
-			if(argv[1][i] >= 65 && argv[1][i] <= 90)
-			{
-				argv[1][i] = argv[1][i] + 32;
-				write (1, "_", 1);
-			}
-			write(1, &argv[1][i], 1);
-			i++;
-		}
-	}
-	write (1, "\n", 1);
-}
-```
-</details>
-
-<details>
-  <summary>Answer camel_to_snake emreakdik</summary>
-  
-```c
-#include <stdlib.h>
-#include <unistd.h>
-
-int main(int argc, char **argv)
-{
-	if (argc == 2)
-	{
-		for (int i = 0; argv[1][i]; i += 1)
-		{
-			if (argv[1][i] >= 'A' 
-			&& argv[1][i] <= 'Z')
-			{
-				write(STDOUT_FILENO, "_", 1);
-				argv[1][i] += 32;
-			}
-			write(STDOUT_FILENO, &argv[1][i], 1);
-		}
-	}
-	write(STDOUT_FILENO, "\n", 1);
-	return EXIT_SUCCESS;
-}
-```
-</details>
-
----
-
-### (3) do_op
+### (2) do_op
 ```
 Assignment name  : do_op
 Expected files   : *.c, *.h
@@ -1153,7 +1027,625 @@ int	main(int ac, char **av)
 
 ---
 
-### (4) ft_atoi
+### (3) is_power_of_2
+```
+Assignment name  : is_power_of_2
+Expected files   : is_power_of_2.c
+Allowed functions: None
+--------------------------------------------------------------------------------
+
+Write a function that determines if a given number is a power of 2.
+
+This function returns 1 if the given number is a power of 2, otherwise it returns 0.
+
+Your function must be declared as follows:
+
+int	    is_power_of_2(unsigned int n);
+```
+
+<details>
+  <summary>Answer is_power_of_2 gitbook</summary>
+  
+```c
+int	    is_power_of_2(unsigned int n)
+{
+
+// we will initialize a test variable to 1, and we will multiply it by 2 until it is equal to 
+// or greater than the variable we have been given as a parameter (n). If the two variables 
+// are equal it means that it is a power of 2
+// (since we have always multiplied this number by 2)
+	
+	int test = 1;
+
+	while (test <= n)
+	{
+		if (test == n)
+			return  (1); // test is a power of 2
+		test = test * 2;
+	}
+	// we will leave the loop if the test variable is greater than n. this means that it is not
+	// a power of 2 an we need to return 0.
+	return (0);
+}
+
+
+#include <stdio.h>
+int main()
+{
+	printf("%d", is_power_of_2(16));
+}
+```
+</details>
+
+<details>
+  <summary>Answer is_power_of_2 pasqualerossi</summary>
+  
+```c
+int is_power_of_2(unsigned int n)
+{
+	if (n == 0)
+		return (0);
+	while (n % 2 == 0)
+		n /= 2;
+	return ((n == 1) ? 1 : 0);
+}
+```
+</details>
+
+<details>
+  <summary>Answer is_power_of_2 emreakdik</summary>
+  
+```c
+#include <stdio.h>
+
+int         is_power_of_2(unsigned int n)
+{
+	if (n == 0)
+		return (0);
+	while (n > 1)
+	{
+		if (n % 2 == 0)
+			n = n / 2;
+		else
+			return (0);
+	}
+	return (1);
+}
+
+/* int	    is_power_of_2(unsigned int n);
+#include <stdlib.h>
+#include <stdio.h>
+
+int main(int argc, char **argv)
+{
+    if(argc == 1)
+        return(0);
+    printf("is_power_of_2(\"%s\") = %d\n", argv[1], is_power_of_2(atoi(argv[1])));
+    return(0);
+} */
+```
+</details>
+
+---
+
+### (4) last_word
+```
+Assignment name  : last_word
+Expected files   : last_word.c
+Allowed functions: write
+--------------------------------------------------------------------------------
+
+Write a program that takes a string and displays its last word followed by a \n.
+
+A word is a section of string delimited by spaces/tabs or by the start/end of
+the string.
+
+If the number of parameters is not 1, or there are no words, display a newline.
+
+Example:
+
+$> ./last_word "FOR PONY" | cat -e
+PONY$
+$> ./last_word "this        ...       is sparta, then again, maybe    not" | cat -e
+not$
+$> ./last_word "   " | cat -e
+$
+$> ./last_word "a" "b" | cat -e
+$
+$> ./last_word "  lorem,ipsum  " | cat -e
+lorem,ipsum$
+$>
+```
+
+<details>
+  <summary>Answer last_word gitbook (wrong)</summary>
+  
+```c
+#include <unistd.h>
+
+int main (int ac, char **a) // fails for spaces at end
+{
+	if (ac == 2)
+	{
+		int i = 0;
+
+		// getting to the end of the string
+		while (a[1][i])
+			i++;
+		i--;
+		// looping over the whole string backwards
+		// until we found a space
+		while (a[1][i] > 32)
+			i--;
+		i++;
+		// getting back to the end and writing the last word to
+		// the screen
+		while (a[1][i])
+		{
+			write(1, &a[1][i], 1);
+			i++;
+		}
+	}
+	write (1, "\n", 1);
+}
+```
+</details>
+
+<details>
+  <summary>Answer last_word pasqualerossi</summary>
+  
+```c
+#include <unistd.h>
+
+void	last_word(char *str)
+{
+	int	j = 0;
+	int i = 0;
+
+	while (str[i])
+	{
+		if (str[i] == ' ' && str[i + 1] >= 33 && str[i + 1] <= 126)
+			j = i + 1;
+		i++;
+	}
+	while (str[j] >= 33 && str[j] <= 127)
+	{
+		write(1, &str[j], 1);
+		j++;
+	}
+}
+
+int		main(int argc, char **argv)
+{
+	if (argc == 2)
+		last_word(argv[1]);
+	write(1, "\n", 1);
+	return (0);
+}
+```
+</details>
+
+<details>
+  <summary>Answer last_word emreakdik</summary>
+  
+```c
+#include <unistd.h>
+
+void	last_word(char *str)
+{
+	int	j = 0;
+	int i = 0;
+
+	while (str[i])
+	{
+		if (str[i] == ' ' && str[i + 1] >= 33 && str[i + 1] <= 126)
+			j = i + 1;
+		i++;
+	}
+	while (str[j] >= 33 && str[j] <= 127)
+	{
+		write(1, &str[j], 1);
+		j++;
+	}
+}
+
+int		main(int argc, char **argv)
+{
+	if (argc == 2)
+		last_word(argv[1]);
+	write(1, "\n", 1);
+	return (0);
+}
+```
+</details>
+
+---
+
+### (5) max
+```
+Assignment name  : max
+Expected files   : max.c
+Allowed functions:
+--------------------------------------------------------------------------------
+
+Write the following function:
+
+int		max(int* tab, unsigned int len);
+
+The first parameter is an array of int, the second is the number of elements in
+the array.
+
+The function returns the largest number found in the array.
+
+If the array is empty, the function returns 0.
+```
+
+<details>
+  <summary>Answer max gitbook (wrong)</summary>
+  
+```c
+int		max(int* tab, unsigned int len)
+{
+	int count = 0;
+	int result = 0; // fails if all negative array
+	int i = 0;
+	if (len > 0)
+	{
+		while (count < len)
+		{
+			if (tab[i] > result)
+				result = tab[i];
+			i++;
+			count++;
+		}
+		return (result);
+	}
+	return (0);
+}
+
+#include <stdio.h>
+
+int main()
+{
+	int int_tab[] = {1, 3, 2, 10, 9};
+	printf("%d", max(int_tab, 5));
+}
+```
+</details>
+
+<details>
+  <summary>Answer max pasqualerossi</summary>
+  
+```c
+int max(int *tab, unsigned int len)
+{
+	if (len == 0)
+		return (0);
+	
+	unsigned int result;
+	unsigned int i = 0;
+	
+	result = tab[i];
+	while(i < len)
+	{
+		if (result <  tab[i])
+		{
+			result = tab[i];
+		}
+		i++;
+	}
+	return result;
+}
+```
+</details>
+
+<details>
+  <summary>Answer max emreakdik</summary>
+  
+```c
+int	max(int* tab, unsigned int len)
+{
+	if (len == 0)
+		return (0);
+	int res = tab[0];
+	for (unsigned int i = 0; i < len; i += 1)
+	{
+		if (res < tab[i])
+			res = tab[i];
+	}
+	return (res);
+}
+
+/* int		max(int* tab, unsigned int len);
+#include <stdlib.h>
+#include <stdio.h>
+
+int main(int argc, char **argv)
+{
+    if (argc < 3)
+        return(0);
+    int *tab = malloc(sizeof(int) * (argc - 1));
+    
+    printf("max( {");
+    for (int i = 2; i < argc; i++)
+    {
+        printf("%s", argv[i]);
+        if (i != argc - 1)
+            printf(";");
+        tab[i - 2] = atoi(argv[i]);
+    }
+    printf("} , %s) = %d\n", argv[1], max(tab, atoi(argv[1])));
+    // printf("max(\"%s\") = %d\n", argv[1], is_power_of_2(atoi(argv[1])));
+    return(0);
+} */
+```
+</details>
+
+
+---
+
+### (6) camel_to_snake
+```
+Assignment name  : camel_to_snake
+Expected files   : camel_to_snake.c
+Allowed functions: malloc, realloc, write
+--------------------------------------------------------------------------------
+
+Write a program that takes a single string in lowerCamelCase format
+and converts it into a string in snake_case format.
+
+A lowerCamelCase string is a string where each word begins with a capital letter
+except for the first one.
+
+A snake_case string is a string where each word is in lower case, separated by
+an underscore "_".
+
+Examples:
+$>./camel_to_snake "hereIsACamelCaseWord"
+here_is_a_camel_case_word
+$>./camel_to_snake "helloWorld" | cat -e
+hello_world$
+$>./camel_to_snake | cat -e
+$
+```
+
+<details>
+  <summary>Answer camel_to_snake gitbook</summary>
+  
+```c
+#include <unistd.h>
+
+int main(int ac, char *av[])
+{
+    int i;
+    
+    if (ac == 2)
+    {
+        i = 0;
+        /* looping over the whole string
+         */
+        while (av[1][i])
+        {
+            /* if we encounter an upper-case letter
+             * we have to make it lower-case and write a _ before it
+             */
+            if (av[1][i] >= 65 && av[1][i] <= 90)
+            {
+                /* here, we change the upper-case letter to its
+                 * corresponding lower-case letter
+                 */
+                av[1][i] += 32;
+                /* we write a _ to the screen
+                 */
+                write(1, "_", 1);
+            }
+            /* then we can write the current character, changed or not
+             */
+            write(1, &av[1][i], 1);
+            i++;
+        }
+    }
+    /* finally we can write the newline
+     */
+    write(1, "\n", 1);
+}
+```
+</details>
+
+<details>
+  <summary>Answer camel_to_snake pasqualerossi</summary>
+  
+```c
+#include <unistd.h>
+
+int main(int argc, char **argv)
+{
+	int i = 0;
+
+	if (argc == 2)
+	{
+		while(argv[1][i])
+		{
+			if(argv[1][i] >= 65 && argv[1][i] <= 90)
+			{
+				argv[1][i] = argv[1][i] + 32;
+				write (1, "_", 1);
+			}
+			write(1, &argv[1][i], 1);
+			i++;
+		}
+	}
+	write (1, "\n", 1);
+}
+```
+</details>
+
+<details>
+  <summary>Answer camel_to_snake emreakdik</summary>
+  
+```c
+#include <stdlib.h>
+#include <unistd.h>
+
+int main(int argc, char **argv)
+{
+	if (argc == 2)
+	{
+		for (int i = 0; argv[1][i]; i += 1)
+		{
+			if (argv[1][i] >= 'A' 
+			&& argv[1][i] <= 'Z')
+			{
+				write(STDOUT_FILENO, "_", 1);
+				argv[1][i] += 32;
+			}
+			write(STDOUT_FILENO, &argv[1][i], 1);
+		}
+	}
+	write(STDOUT_FILENO, "\n", 1);
+	return EXIT_SUCCESS;
+}
+```
+</details>
+
+---
+
+### (7) snake_to_camel
+```
+Assignment name  : snake_to_camel
+Expected files   : snake_to_camel.c
+Allowed functions: malloc, free, realloc, write
+--------------------------------------------------------------------------------
+
+Write a program that takes a single string in snake_case format
+and converts it into a string in lowerCamelCase format.
+
+A snake_case string is a string where each word is in lower case, separated by
+an underscore "_".
+
+A lowerCamelCase string is a string where each word begins with a capital letter
+except for the first one.
+
+Examples:
+$>./camel_to_snake "here_is_a_snake_case_word"
+hereIsASnakeCaseWord
+$>./camel_to_snake "hello_world" | cat -e
+helloWorld$
+$>./camel_to_snake | cat -e
+$
+```
+
+<details>
+  <summary>Answer snake_to_camel gitbook</summary>
+  
+```c
+#include <unistd.h>
+
+int toUpper(int c)
+{
+    if (c >= 'a' && c <= 'z')
+        return (c - 32);
+    return (c);
+}
+
+int ft_putchar(char c)
+{
+    return write(1, &c, 1);
+}
+
+int main(int ac, char **av)
+{
+    int i;
+    
+    // do things only if there is only one argument
+    if (ac == 2)
+    {
+        i = 0;
+        // looping over the whole string
+        while (av[1][i])
+        {
+            // If we encounter a _, we have to make the
+            // next letter uppercase and not print the _
+            // so we only print the uppercase letter
+            if (av[1][i] == '_')
+                // here we use the ++i operator to
+                // increment i before accessing the value
+                // that way we skip the _
+                ft_putchar(toUpper(av[1][++i]));
+            else
+                // in all other cases, we simply write
+                // the character to the screen
+                ft_putchar(av[1][i]);
+            i++;
+        }
+    }
+    // and finally, we have our newline
+    // putting it here makes us only need one in all the 
+    // cases 
+    ft_putchar('\n');
+}(0)
+}
+```
+</details>
+
+<details>
+  <summary>Answer snake_to_camel pasqualerossi</summary>
+  
+```c
+#include <unistd.h>
+
+int main(int argc, char **argv)
+{
+	int i = 0;
+	
+	if (argc ==2 )
+	{
+		while(argv[1][i] != '\0')
+		{
+			if (argv[1][i] == '_')
+			{
+				i++;
+				argv[1][i] = argv[1][i]-32;
+			}
+			write (1, &argv[1][i], 1);
+			i++;
+		}
+	}
+	write(1, "\n", 1);
+}
+```
+</details>
+
+<details>
+  <summary>Answer snake_to_camel emreakdik</summary>
+  
+```c
+#include <stdlib.h>
+#include <unistd.h>
+
+int main(int argc, char **argv)
+{
+	if (argc == 2)
+	{
+		for (int i = 0; argv[1][i]; i += 1)
+		{
+			if (argv[1][i] == '_')
+			{
+				i += 1;
+				argv[1][i] -= 32;
+			}
+			write(STDOUT_FILENO, &argv[1][i], 1);
+		}
+	}
+	write(STDOUT_FILENO, "\n", 1);
+	return EXIT_SUCCESS;
+}
+```
+</details>
+
+---
+
+### (8) ft_atoi
 ```
 Assignment name  : ft_atoi
 Expected files   : ft_atoi.c
@@ -1292,7 +1784,7 @@ int main(int argc, char **argv)
 
 ---
 
-### (5) ft_strcmp
+### (9) ft_strcmp
 ```
 Assignment name  : ft_strcmp
 Expected files   : ft_strcmp.c
@@ -1394,7 +1886,344 @@ int main(int argc, char **argv)
 
 ---
 
-### (6) ft_strcspn
+### (10) ft_strdup
+```
+Assignment name  : ft_strdup
+Expected files   : ft_strdup.c
+Allowed functions: malloc
+--------------------------------------------------------------------------------
+
+Reproduce the behavior of the function strdup (man strdup).
+
+Your function must be declared as follows:
+
+char    *ft_strdup(char *src);
+```
+
+<details>
+  <summary>Answer ft_strdup gitbook</summary>
+  
+```c
+#include <stdlib.h>
+
+char    *ft_strdup(char *src)
+{
+	char	*tmp; //we will duplicate str into this variable
+	int	len; 
+	int	i;
+
+	len = 0;
+	i = 0;
+	while (src[len]) //we calculate the length of src to create a place with enough memory
+		len++;
+	tmp = malloc(sizeof(char) * len + 1); //we allocate some space thanks to malloc. + 1 because the string need some space for the extra "\0" at the end (don't forget it !)
+	if (!tmp) //malloc protection
+		return (NULL);
+	while (src[i]) //loop to complete the new string
+	{
+		tmp[i] = src[i];
+		i++;
+	}
+	tmp[i] = 0; //adding the null character at the end
+	return (tmp);
+}
+
+
+#include <stdio.h>
+
+int main()
+{
+	char	*a;
+	a = "Hello World";
+	printf("%s\n", ft_strdup(a));
+}
+```
+</details>
+
+<details>
+  <summary>Answer ft_strdup pasqualerossi</summary>
+  
+```c
+#include <stdlib.h>
+
+char	*ft_strdup(char *src)
+{
+	int	i = 0;
+	int	length = 0;
+	char	*strcpy;
+
+	while (src[length])
+		length++;
+	strcpy = malloc(sizeof(*strcpy) * (length + 1));
+	if (strcpy != NULL)
+	{
+		while (src[i])
+		{
+			strcpy[i] = src[i];
+			i++;
+		}
+		strcpy[i] = '\0';
+	}
+	return (strcpy);
+}
+```
+</details>
+
+<details>
+  <summary>Answer ft_strdup emreakdik</summary>
+  
+```c
+#include <stdlib.h>
+#include <stdio.h>
+
+char    *ft_strdup(char *src)
+{
+	int	i;
+	char *dest;
+
+	i = 0;
+	while (src[i] != '\0')
+		i++;
+	dest = malloc(sizeof (char) * (i + 1));
+	if (dest == NULL)
+		return (NULL);
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = src[i];
+	return (dest);
+}
+
+/* char    *ft_strdup(char *src);
+#include <stdlib.h>
+#include <stdio.h>
+
+int main(int argc, char **argv)
+{
+    if(argc == 1)
+    {
+        printf("ft_strdup(\"\") = %s\n", ft_strdup(""));
+        return(0);
+    }
+    printf("ft_strdup(\"%s\") = %s\n", argv[1], ft_strdup(argv[1]));
+    return(0);
+} */
+```
+</details>
+
+---
+
+### (11) ft_strrev
+```
+Assignment name  : ft_strrev
+Expected files   : ft_strrev.c
+Allowed functions:
+--------------------------------------------------------------------------------
+
+Write a function that reverses (in-place) a string.
+
+It must return its parameter.
+
+Your function must be declared as follows:
+
+char    *ft_strrev(char *str);
+```
+
+<details>
+  <summary>Answer ft_strrev gitbook</summary>
+  
+```c
+#include <stdio.h>
+
+char    *ft_strrev(char *str)
+{
+	int i;
+	int len;
+	char tmp;
+
+
+	i = 0;
+	len = 0;
+	while (str[len])
+		len++;
+	while (i < len - 1)
+	{
+		tmp = str[i];
+		str[i] = str[len - 1];
+		str[len - 1] = tmp;
+		i++;
+		len--;
+	}
+	return (str);
+}
+
+/*int	main(void)
+{
+	char s[] = "Hello World";
+	ft_strrev(s);
+	printf("%s\n", s);
+	return (0);
+}
+```
+</details>
+
+<details>
+  <summary>Answer ft_strrev pasqualerossi</summary>
+  
+```c
+char *ft_strrev(char *str)
+{
+	int i = -1;
+	int length = 0;
+	char temporary;
+
+	while (str[length])
+		length++;
+	while (++i < length / 2)
+	{
+		temporary = str[i];
+		str[i] = str[length - 1 - i];
+		str[length - 1 - i] = temporary;
+	}
+	return (str);
+}
+```
+</details>
+
+<details>
+  <summary>Answer ft_strrev emreakdik</summary>
+  
+```c
+char *ft_strrev(char *str)
+{
+	int i = -1;
+	int length = 0;
+	char temporary;
+
+	while (str[length])
+		length++;
+	while (++i < length / 2)
+	{
+		temporary = str[i];
+		str[i] = str[length - 1 - i];
+		str[length - 1 - i] = temporary;
+	}
+	return (str);
+}
+
+/* #include <stdio.h>
+
+char *ft_strrev(char *str);
+
+int main(int argc, char **argv)
+{
+    if (argc == 2)
+        printf("%s", ft_strrev(argv[1]));
+    return (0);
+} */
+```
+</details>
+
+---
+
+### (12) ft_strpbrk
+```
+Assignment name	: ft_strpbrk
+Expected files	: ft_strpbrk.c
+Allowed functions: None
+---------------------------------------------------------------
+
+Reproduce exactly the behavior of the function strpbrk
+(man strpbrk).
+
+The function should be prototyped as follows:
+
+char	*ft_strpbrk(const char *s1, const char *s2);
+
+---------------------------------------------------------------
+STRPBRK(3) (simplified)
+
+NAME
+     strpbrk –- locate multiple characters in string
+LIBRARY
+     Standard C Library (libc, -lc)
+SYNOPSIS
+     #include <string.h>
+     char *strpbrk(const char *s, const char *charset);
+
+DESCRIPTION
+     The strpbrk() function locates in the null-terminated string s the first
+     occurrence of any character in the string charset and returns a pointer to this
+     character.  If no characters from charset occur anywhere in s strpbrk()
+     returns NULL.
+RETURN VALUES
+     The strpbrk() function return a pointer to the first occurence of any character
+     in the string,if no characters occur anywhere in s, strpbrk() returns NULL.
+```
+
+<details>
+  <summary>Answer ft_strpbrk gitbook</summary>
+  
+```c
+char	*ft_strpbrk(const char *s1, const char *s2)
+{
+	int i;
+	int	j;
+
+	i = 0;
+	while (s1[i])
+	{
+		j = 0;
+		while (s2[j])
+		{
+			if (s2[j] == s1[i])
+				return (s1[i]);
+			j++;
+		}
+		i++;
+	}
+	return (NULL);
+}
+```
+</details>
+
+<details>
+  <summary>Answer ft_strpbrk pasqualerossi</summary>
+  
+```c
+#include <stdio.h>
+#include <string.h>
+
+char *ft_strpbrk(const char *s1, const char *s2)
+{
+	int i = 0;
+	
+	if (!s1 || !s2)
+	{
+		return (0);
+	}
+	while(*s1)
+	{
+		i = 0;
+	   	while(s2[i])
+		{
+			if(*s1 == s2[i])
+				return (char *) s1;
+			i++;
+		}
+		s1++;	
+	}
+	return (0);
+}
+```
+</details>
+
+---
+
+### (13) ft_strcspn
 ```
 Assignment name	: ft_strcspn
 Expected files	: ft_strcspn.c
@@ -1548,344 +2377,7 @@ int main(int argc, char **argv)
 
 ---
 
-### (7) ft_strdup
-```
-Assignment name  : ft_strdup
-Expected files   : ft_strdup.c
-Allowed functions: malloc
---------------------------------------------------------------------------------
-
-Reproduce the behavior of the function strdup (man strdup).
-
-Your function must be declared as follows:
-
-char    *ft_strdup(char *src);
-```
-
-<details>
-  <summary>Answer ft_strdup gitbook</summary>
-  
-```c
-#include <stdlib.h>
-
-char    *ft_strdup(char *src)
-{
-	char	*tmp; //we will duplicate str into this variable
-	int	len; 
-	int	i;
-
-	len = 0;
-	i = 0;
-	while (src[len]) //we calculate the length of src to create a place with enough memory
-		len++;
-	tmp = malloc(sizeof(char) * len + 1); //we allocate some space thanks to malloc. + 1 because the string need some space for the extra "\0" at the end (don't forget it !)
-	if (!tmp) //malloc protection
-		return (NULL);
-	while (src[i]) //loop to complete the new string
-	{
-		tmp[i] = src[i];
-		i++;
-	}
-	tmp[i] = 0; //adding the null character at the end
-	return (tmp);
-}
-
-
-#include <stdio.h>
-
-int main()
-{
-	char	*a;
-	a = "Hello World";
-	printf("%s\n", ft_strdup(a));
-}
-```
-</details>
-
-<details>
-  <summary>Answer ft_strdup pasqualerossi</summary>
-  
-```c
-#include <stdlib.h>
-
-char	*ft_strdup(char *src)
-{
-	int	i = 0;
-	int	length = 0;
-	char	*strcpy;
-
-	while (src[length])
-		length++;
-	strcpy = malloc(sizeof(*strcpy) * (length + 1));
-	if (strcpy != NULL)
-	{
-		while (src[i])
-		{
-			strcpy[i] = src[i];
-			i++;
-		}
-		strcpy[i] = '\0';
-	}
-	return (strcpy);
-}
-```
-</details>
-
-<details>
-  <summary>Answer ft_strdup emreakdik</summary>
-  
-```c
-#include <stdlib.h>
-#include <stdio.h>
-
-char    *ft_strdup(char *src)
-{
-	int	i;
-	char *dest;
-
-	i = 0;
-	while (src[i] != '\0')
-		i++;
-	dest = malloc(sizeof (char) * (i + 1));
-	if (dest == NULL)
-		return (NULL);
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = src[i];
-	return (dest);
-}
-
-/* char    *ft_strdup(char *src);
-#include <stdlib.h>
-#include <stdio.h>
-
-int main(int argc, char **argv)
-{
-    if(argc == 1)
-    {
-        printf("ft_strdup(\"\") = %s\n", ft_strdup(""));
-        return(0);
-    }
-    printf("ft_strdup(\"%s\") = %s\n", argv[1], ft_strdup(argv[1]));
-    return(0);
-} */
-```
-</details>
-
----
-
-### (8) ft_strpbrk
-```
-Assignment name	: ft_strpbrk
-Expected files	: ft_strpbrk.c
-Allowed functions: None
----------------------------------------------------------------
-
-Reproduce exactly the behavior of the function strpbrk
-(man strpbrk).
-
-The function should be prototyped as follows:
-
-char	*ft_strpbrk(const char *s1, const char *s2);
-
----------------------------------------------------------------
-STRPBRK(3) (simplified)
-
-NAME
-     strpbrk –- locate multiple characters in string
-LIBRARY
-     Standard C Library (libc, -lc)
-SYNOPSIS
-     #include <string.h>
-     char *strpbrk(const char *s, const char *charset);
-
-DESCRIPTION
-     The strpbrk() function locates in the null-terminated string s the first
-     occurrence of any character in the string charset and returns a pointer to this
-     character.  If no characters from charset occur anywhere in s strpbrk()
-     returns NULL.
-RETURN VALUES
-     The strpbrk() function return a pointer to the first occurence of any character
-     in the string,if no characters occur anywhere in s, strpbrk() returns NULL.
-```
-
-<details>
-  <summary>Answer ft_strpbrk gitbook</summary>
-  
-```c
-char	*ft_strpbrk(const char *s1, const char *s2)
-{
-	int i;
-	int	j;
-
-	i = 0;
-	while (s1[i])
-	{
-		j = 0;
-		while (s2[j])
-		{
-			if (s2[j] == s1[i])
-				return (s1[i]);
-			j++;
-		}
-		i++;
-	}
-	return (NULL);
-}
-```
-</details>
-
-<details>
-  <summary>Answer ft_strpbrk pasqualerossi</summary>
-  
-```c
-#include <stdio.h>
-#include <string.h>
-
-char *ft_strpbrk(const char *s1, const char *s2)
-{
-	int i = 0;
-	
-	if (!s1 || !s2)
-	{
-		return (0);
-	}
-	while(*s1)
-	{
-		i = 0;
-	   	while(s2[i])
-		{
-			if(*s1 == s2[i])
-				return (char *) s1;
-			i++;
-		}
-		s1++;	
-	}
-	return (0);
-}
-```
-</details>
-
----
-
-### (9) ft_strrev
-```
-Assignment name  : ft_strrev
-Expected files   : ft_strrev.c
-Allowed functions:
---------------------------------------------------------------------------------
-
-Write a function that reverses (in-place) a string.
-
-It must return its parameter.
-
-Your function must be declared as follows:
-
-char    *ft_strrev(char *str);
-```
-
-<details>
-  <summary>Answer ft_strrev gitbook</summary>
-  
-```c
-#include <stdio.h>
-
-char    *ft_strrev(char *str)
-{
-	int i;
-	int len;
-	char tmp;
-
-
-	i = 0;
-	len = 0;
-	while (str[len])
-		len++;
-	while (i < len - 1)
-	{
-		tmp = str[i];
-		str[i] = str[len - 1];
-		str[len - 1] = tmp;
-		i++;
-		len--;
-	}
-	return (str);
-}
-
-/*int	main(void)
-{
-	char s[] = "Hello World";
-	ft_strrev(s);
-	printf("%s\n", s);
-	return (0);
-}
-```
-</details>
-
-<details>
-  <summary>Answer ft_strrev pasqualerossi</summary>
-  
-```c
-char *ft_strrev(char *str)
-{
-	int i = -1;
-	int length = 0;
-	char temporary;
-
-	while (str[length])
-		length++;
-	while (++i < length / 2)
-	{
-		temporary = str[i];
-		str[i] = str[length - 1 - i];
-		str[length - 1 - i] = temporary;
-	}
-	return (str);
-}
-```
-</details>
-
-<details>
-  <summary>Answer ft_strrev emreakdik</summary>
-  
-```c
-char *ft_strrev(char *str)
-{
-	int i = -1;
-	int length = 0;
-	char temporary;
-
-	while (str[length])
-		length++;
-	while (++i < length / 2)
-	{
-		temporary = str[i];
-		str[i] = str[length - 1 - i];
-		str[length - 1 - i] = temporary;
-	}
-	return (str);
-}
-
-/* #include <stdio.h>
-
-char *ft_strrev(char *str);
-
-int main(int argc, char **argv)
-{
-    if (argc == 2)
-        printf("%s", ft_strrev(argv[1]));
-    return (0);
-} */
-```
-</details>
-
----
-
-### (10) ft_strspn
+### (14) ft_strspn
 ```
 Assignment name	: ft_strspn
 Expected files	: ft_strspn.c
@@ -1969,531 +2461,6 @@ size_t	ft_strspn(const char *s, const char *accept)
 	}
 	return (i);
 }
-```
-</details>
-
----
-
-### (11) inter
-```
-Assignment name  : inter
-Expected files   : inter.c
-Allowed functions: write
---------------------------------------------------------------------------------
-
-Write a program that takes two strings and displays, without doubles, the
-characters that appear in both strings, in the order they appear in the first
-one.
-
-The display will be followed by a \n.
-
-If the number of arguments is not 2, the program displays \n.
-
-Examples:
-
-$>./inter "padinton" "paqefwtdjetyiytjneytjoeyjnejeyj" | cat -e
-padinto$
-$>./inter ddf6vewg64f gtwthgdwthdwfteewhrtag6h4ffdhsd | cat -e
-df6ewg4$
-$>./inter "rien" "cette phrase ne cache rien" | cat -e
-rien$
-$>./inter | cat -e
-$
-```
-
-<details>
-  <summary>Answer inter gitbook</summary>
-  
-```c
-#include <unistd.h>
-
-int	ft_putchar(char c);
-
-int	main(int ac, char **av)
-{
-	int	i = 0, j;
-	// create an array of int that will act as a lookup table
-	// 256 is because of the ascii table, each one will
-	// correspond to a single character
-	int	lookup[256] = {};
-
-	if (ac == 3)
-	{
-		// looping over the whole string
-		while (av[1][i])
-		{
-			j = 0;
-			// comparing against every character in the
-			// second string
-			while (av[2][j])
-			{
-				// checking if characters are the same
-				// as well as checking in the lookup
-				// table if the character not already
-				// found
-				if (av[1][i] == av[2][j] && !lookup[(int)av[2][j]])
-				{
-					// marking the character found
-					// in the lookup table
-					lookup[(int)av[2][j]] = 1;
-					// writing the character
-					// to the screen
-					ft_putchar(av[2][j]);
-				}
-				j++;
-			}
-			i++;
-		}
-	}
-	ft_putchar('\n');
-}
-
-int	ft_putchar(char c)
-{
-	return write(1, &c, 1);
-}
-```
-</details>
-
-<details>
-  <summary>Answer inter pasqualerossi</summary>
-  
-```c
-#include <unistd.h>
-
-int	iter(char *str, char c, int len)
-{
-	int	i = 0;
-
-	while (str[i] && (i < len || len == -1))
-		if (str[i++] == c)
-			return (1);
-	return (0);
-}
-
-int	main(int argc, char *argv[])
-{
-	int	i;
-
-	if (argc == 3)
-	{
-		i = 0;
-		while (argv[1][i])
-		{
-			if (!iter(argv[1], argv[1][i], i) && iter(argv[2], argv[1][i], -1))
-				write(1, &argv[1][i], 1);
-			i += 1;
-		}
-	}
-	write(1, "\n", 1);
-	return (0);
-}
-```
-</details>
-
-<details>
-  <summary>Answer inter emreakdik</summary>
-  
-```c
-
-#include <unistd.h>
-
-int	main(int ac, char **av)
-{
-	int	i;
-	int k;
-	int l;
-	char *s1;
-	char *s2;
-
-	i = 0;
-	l = 0;
-	if (ac == 3)
-	{
-		s1 = av[1];
-		s2 = av[2];
-		while (s1[i] != '\0')
-		{
-			k = 0;
-			while (s2[k] != '\0')
-			{
-				if(s1[i] == s2[k])
-				{ 
-					l = 0;
-					while (s1[l] != s1[i])
-						l++;
-					if (l == i)
-					{
-						l = 0;
-						while (s2[l] != s2[k])
-							l++;
-						if (l == k)
-							write(1, &s1[i], 1);
-					}
-				}
-				k++;
-			}
-			i++;
-		}
-	}
-	write(1, "\n", 1);
-}
-```
-</details>
-
----
-
-### (12) is_power_of_2
-```
-Assignment name  : is_power_of_2
-Expected files   : is_power_of_2.c
-Allowed functions: None
---------------------------------------------------------------------------------
-
-Write a function that determines if a given number is a power of 2.
-
-This function returns 1 if the given number is a power of 2, otherwise it returns 0.
-
-Your function must be declared as follows:
-
-int	    is_power_of_2(unsigned int n);
-```
-
-<details>
-  <summary>Answer is_power_of_2 gitbook</summary>
-  
-```c
-int	    is_power_of_2(unsigned int n)
-{
-
-// we will initialize a test variable to 1, and we will multiply it by 2 until it is equal to 
-// or greater than the variable we have been given as a parameter (n). If the two variables 
-// are equal it means that it is a power of 2
-// (since we have always multiplied this number by 2)
-	
-	int test = 1;
-
-	while (test <= n)
-	{
-		if (test == n)
-			return  (1); // test is a power of 2
-		test = test * 2;
-	}
-	// we will leave the loop if the test variable is greater than n. this means that it is not
-	// a power of 2 an we need to return 0.
-	return (0);
-}
-
-
-#include <stdio.h>
-int main()
-{
-	printf("%d", is_power_of_2(16));
-}
-```
-</details>
-
-<details>
-  <summary>Answer is_power_of_2 pasqualerossi</summary>
-  
-```c
-int is_power_of_2(unsigned int n)
-{
-	if (n == 0)
-		return (0);
-	while (n % 2 == 0)
-		n /= 2;
-	return ((n == 1) ? 1 : 0);
-}
-```
-</details>
-
-<details>
-  <summary>Answer is_power_of_2 emreakdik</summary>
-  
-```c
-#include <stdio.h>
-
-int         is_power_of_2(unsigned int n)
-{
-	if (n == 0)
-		return (0);
-	while (n > 1)
-	{
-		if (n % 2 == 0)
-			n = n / 2;
-		else
-			return (0);
-	}
-	return (1);
-}
-
-/* int	    is_power_of_2(unsigned int n);
-#include <stdlib.h>
-#include <stdio.h>
-
-int main(int argc, char **argv)
-{
-    if(argc == 1)
-        return(0);
-    printf("is_power_of_2(\"%s\") = %d\n", argv[1], is_power_of_2(atoi(argv[1])));
-    return(0);
-} */
-```
-</details>
-
----
-
-### (13) last_word
-```
-Assignment name  : last_word
-Expected files   : last_word.c
-Allowed functions: write
---------------------------------------------------------------------------------
-
-Write a program that takes a string and displays its last word followed by a \n.
-
-A word is a section of string delimited by spaces/tabs or by the start/end of
-the string.
-
-If the number of parameters is not 1, or there are no words, display a newline.
-
-Example:
-
-$> ./last_word "FOR PONY" | cat -e
-PONY$
-$> ./last_word "this        ...       is sparta, then again, maybe    not" | cat -e
-not$
-$> ./last_word "   " | cat -e
-$
-$> ./last_word "a" "b" | cat -e
-$
-$> ./last_word "  lorem,ipsum  " | cat -e
-lorem,ipsum$
-$>
-```
-
-<details>
-  <summary>Answer last_word gitbook (wrong)</summary>
-  
-```c
-#include <unistd.h>
-
-int main (int ac, char **a) // fails for spaces at end
-{
-	if (ac == 2)
-	{
-		int i = 0;
-
-		// getting to the end of the string
-		while (a[1][i])
-			i++;
-		i--;
-		// looping over the whole string backwards
-		// until we found a space
-		while (a[1][i] > 32)
-			i--;
-		i++;
-		// getting back to the end and writing the last word to
-		// the screen
-		while (a[1][i])
-		{
-			write(1, &a[1][i], 1);
-			i++;
-		}
-	}
-	write (1, "\n", 1);
-}
-```
-</details>
-
-<details>
-  <summary>Answer last_word pasqualerossi</summary>
-  
-```c
-#include <unistd.h>
-
-void	last_word(char *str)
-{
-	int	j = 0;
-	int i = 0;
-
-	while (str[i])
-	{
-		if (str[i] == ' ' && str[i + 1] >= 33 && str[i + 1] <= 126)
-			j = i + 1;
-		i++;
-	}
-	while (str[j] >= 33 && str[j] <= 127)
-	{
-		write(1, &str[j], 1);
-		j++;
-	}
-}
-
-int		main(int argc, char **argv)
-{
-	if (argc == 2)
-		last_word(argv[1]);
-	write(1, "\n", 1);
-	return (0);
-}
-```
-</details>
-
-<details>
-  <summary>Answer last_word emreakdik</summary>
-  
-```c
-#include <unistd.h>
-
-void	last_word(char *str)
-{
-	int	j = 0;
-	int i = 0;
-
-	while (str[i])
-	{
-		if (str[i] == ' ' && str[i + 1] >= 33 && str[i + 1] <= 126)
-			j = i + 1;
-		i++;
-	}
-	while (str[j] >= 33 && str[j] <= 127)
-	{
-		write(1, &str[j], 1);
-		j++;
-	}
-}
-
-int		main(int argc, char **argv)
-{
-	if (argc == 2)
-		last_word(argv[1]);
-	write(1, "\n", 1);
-	return (0);
-}
-```
-</details>
-
----
-
-### (14) max
-```
-Assignment name  : max
-Expected files   : max.c
-Allowed functions:
---------------------------------------------------------------------------------
-
-Write the following function:
-
-int		max(int* tab, unsigned int len);
-
-The first parameter is an array of int, the second is the number of elements in
-the array.
-
-The function returns the largest number found in the array.
-
-If the array is empty, the function returns 0.
-```
-
-<details>
-  <summary>Answer max gitbook (wrong)</summary>
-  
-```c
-int		max(int* tab, unsigned int len)
-{
-	int count = 0;
-	int result = 0; // fails if all negative array
-	int i = 0;
-	if (len > 0)
-	{
-		while (count < len)
-		{
-			if (tab[i] > result)
-				result = tab[i];
-			i++;
-			count++;
-		}
-		return (result);
-	}
-	return (0);
-}
-
-#include <stdio.h>
-
-int main()
-{
-	int int_tab[] = {1, 3, 2, 10, 9};
-	printf("%d", max(int_tab, 5));
-}
-```
-</details>
-
-<details>
-  <summary>Answer max pasqualerossi</summary>
-  
-```c
-int max(int *tab, unsigned int len)
-{
-	if (len == 0)
-		return (0);
-	
-	unsigned int result;
-	unsigned int i = 0;
-	
-	result = tab[i];
-	while(i < len)
-	{
-		if (result <  tab[i])
-		{
-			result = tab[i];
-		}
-		i++;
-	}
-	return result;
-}
-```
-</details>
-
-<details>
-  <summary>Answer max emreakdik</summary>
-  
-```c
-int	max(int* tab, unsigned int len)
-{
-	if (len == 0)
-		return (0);
-	int res = tab[0];
-	for (unsigned int i = 0; i < len; i += 1)
-	{
-		if (res < tab[i])
-			res = tab[i];
-	}
-	return (res);
-}
-
-/* int		max(int* tab, unsigned int len);
-#include <stdlib.h>
-#include <stdio.h>
-
-int main(int argc, char **argv)
-{
-    if (argc < 3)
-        return(0);
-    int *tab = malloc(sizeof(int) * (argc - 1));
-    
-    printf("max( {");
-    for (int i = 2; i < argc; i++)
-    {
-        printf("%s", argv[i]);
-        if (i != argc - 1)
-            printf(";");
-        tab[i - 2] = atoi(argv[i]);
-    }
-    printf("} , %s) = %d\n", argv[1], max(tab, atoi(argv[1])));
-    // printf("max(\"%s\") = %d\n", argv[1], is_power_of_2(atoi(argv[1])));
-    return(0);
-} */
 ```
 </details>
 
@@ -2722,142 +2689,7 @@ int main(int ac, char **av)
 
 ---
 
-### ((17) snake_to_camel
-```
-Assignment name  : snake_to_camel
-Expected files   : snake_to_camel.c
-Allowed functions: malloc, free, realloc, write
---------------------------------------------------------------------------------
-
-Write a program that takes a single string in snake_case format
-and converts it into a string in lowerCamelCase format.
-
-A snake_case string is a string where each word is in lower case, separated by
-an underscore "_".
-
-A lowerCamelCase string is a string where each word begins with a capital letter
-except for the first one.
-
-Examples:
-$>./camel_to_snake "here_is_a_snake_case_word"
-hereIsASnakeCaseWord
-$>./camel_to_snake "hello_world" | cat -e
-helloWorld$
-$>./camel_to_snake | cat -e
-$
-```
-
-<details>
-  <summary>Answer snake_to_camel gitbook</summary>
-  
-```c
-#include <unistd.h>
-
-int toUpper(int c)
-{
-    if (c >= 'a' && c <= 'z')
-        return (c - 32);
-    return (c);
-}
-
-int ft_putchar(char c)
-{
-    return write(1, &c, 1);
-}
-
-int main(int ac, char **av)
-{
-    int i;
-    
-    // do things only if there is only one argument
-    if (ac == 2)
-    {
-        i = 0;
-        // looping over the whole string
-        while (av[1][i])
-        {
-            // If we encounter a _, we have to make the
-            // next letter uppercase and not print the _
-            // so we only print the uppercase letter
-            if (av[1][i] == '_')
-                // here we use the ++i operator to
-                // increment i before accessing the value
-                // that way we skip the _
-                ft_putchar(toUpper(av[1][++i]));
-            else
-                // in all other cases, we simply write
-                // the character to the screen
-                ft_putchar(av[1][i]);
-            i++;
-        }
-    }
-    // and finally, we have our newline
-    // putting it here makes us only need one in all the 
-    // cases 
-    ft_putchar('\n');
-}(0)
-}
-```
-</details>
-
-<details>
-  <summary>Answer snake_to_camel pasqualerossi</summary>
-  
-```c
-#include <unistd.h>
-
-int main(int argc, char **argv)
-{
-	int i = 0;
-	
-	if (argc ==2 )
-	{
-		while(argv[1][i] != '\0')
-		{
-			if (argv[1][i] == '_')
-			{
-				i++;
-				argv[1][i] = argv[1][i]-32;
-			}
-			write (1, &argv[1][i], 1);
-			i++;
-		}
-	}
-	write(1, "\n", 1);
-}
-```
-</details>
-
-<details>
-  <summary>Answer snake_to_camel emreakdik</summary>
-  
-```c
-#include <stdlib.h>
-#include <unistd.h>
-
-int main(int argc, char **argv)
-{
-	if (argc == 2)
-	{
-		for (int i = 0; argv[1][i]; i += 1)
-		{
-			if (argv[1][i] == '_')
-			{
-				i += 1;
-				argv[1][i] -= 32;
-			}
-			write(STDOUT_FILENO, &argv[1][i], 1);
-		}
-	}
-	write(STDOUT_FILENO, "\n", 1);
-	return EXIT_SUCCESS;
-}
-```
-</details>
-
----
-
-### (18) swap_bits
+### (17) swap_bits
 ```
 Assignment name  : swap_bits
 Expected files   : swap_bits.c
@@ -2934,6 +2766,175 @@ int	main(int argc, char **argv)
 	write(1, "\n", 1);
 	return (0);
 } */
+```
+</details>
+
+---
+
+### (18) inter
+```
+Assignment name  : inter
+Expected files   : inter.c
+Allowed functions: write
+--------------------------------------------------------------------------------
+
+Write a program that takes two strings and displays, without doubles, the
+characters that appear in both strings, in the order they appear in the first
+one.
+
+The display will be followed by a \n.
+
+If the number of arguments is not 2, the program displays \n.
+
+Examples:
+
+$>./inter "padinton" "paqefwtdjetyiytjneytjoeyjnejeyj" | cat -e
+padinto$
+$>./inter ddf6vewg64f gtwthgdwthdwfteewhrtag6h4ffdhsd | cat -e
+df6ewg4$
+$>./inter "rien" "cette phrase ne cache rien" | cat -e
+rien$
+$>./inter | cat -e
+$
+```
+
+<details>
+  <summary>Answer inter gitbook</summary>
+  
+```c
+#include <unistd.h>
+
+int	ft_putchar(char c);
+
+int	main(int ac, char **av)
+{
+	int	i = 0, j;
+	// create an array of int that will act as a lookup table
+	// 256 is because of the ascii table, each one will
+	// correspond to a single character
+	int	lookup[256] = {};
+
+	if (ac == 3)
+	{
+		// looping over the whole string
+		while (av[1][i])
+		{
+			j = 0;
+			// comparing against every character in the
+			// second string
+			while (av[2][j])
+			{
+				// checking if characters are the same
+				// as well as checking in the lookup
+				// table if the character not already
+				// found
+				if (av[1][i] == av[2][j] && !lookup[(int)av[2][j]])
+				{
+					// marking the character found
+					// in the lookup table
+					lookup[(int)av[2][j]] = 1;
+					// writing the character
+					// to the screen
+					ft_putchar(av[2][j]);
+				}
+				j++;
+			}
+			i++;
+		}
+	}
+	ft_putchar('\n');
+}
+
+int	ft_putchar(char c)
+{
+	return write(1, &c, 1);
+}
+```
+</details>
+
+<details>
+  <summary>Answer inter pasqualerossi</summary>
+  
+```c
+#include <unistd.h>
+
+int	iter(char *str, char c, int len)
+{
+	int	i = 0;
+
+	while (str[i] && (i < len || len == -1))
+		if (str[i++] == c)
+			return (1);
+	return (0);
+}
+
+int	main(int argc, char *argv[])
+{
+	int	i;
+
+	if (argc == 3)
+	{
+		i = 0;
+		while (argv[1][i])
+		{
+			if (!iter(argv[1], argv[1][i], i) && iter(argv[2], argv[1][i], -1))
+				write(1, &argv[1][i], 1);
+			i += 1;
+		}
+	}
+	write(1, "\n", 1);
+	return (0);
+}
+```
+</details>
+
+<details>
+  <summary>Answer inter emreakdik</summary>
+  
+```c
+
+#include <unistd.h>
+
+int	main(int ac, char **av)
+{
+	int	i;
+	int k;
+	int l;
+	char *s1;
+	char *s2;
+
+	i = 0;
+	l = 0;
+	if (ac == 3)
+	{
+		s1 = av[1];
+		s2 = av[2];
+		while (s1[i] != '\0')
+		{
+			k = 0;
+			while (s2[k] != '\0')
+			{
+				if(s1[i] == s2[k])
+				{ 
+					l = 0;
+					while (s1[l] != s1[i])
+						l++;
+					if (l == i)
+					{
+						l = 0;
+						while (s2[l] != s2[k])
+							l++;
+						if (l == k)
+							write(1, &s1[i], 1);
+					}
+				}
+				k++;
+			}
+			i++;
+		}
+	}
+	write(1, "\n", 1);
+}
 ```
 </details>
 
