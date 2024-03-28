@@ -3600,7 +3600,7 @@ int main(int ac, char **av)
 </details>
 
 <details>
-  <summary>Answer epur_str pasqualerossi</summary>
+  <summary>Answer epur_str pasqualerossi (prospective)</summary>
   
 ```c
 #include <unistd.h>
@@ -3770,7 +3770,7 @@ int main(int ac, char **av)
 </details>
 
 <details>
-  <summary>Answer expand_str pasqualerossi</summary>
+  <summary>Answer expand_str pasqualerossi (prospective)</summary>
   
 ```c
 #include <unistd.h>
@@ -4016,7 +4016,7 @@ int ft_atoi_base(const char *str, int str_base)
 </details>
 
 <details>
-  <summary>Answer ft_atoi_base emreakdik/jcluzet</summary>
+  <summary>Answer ft_atoi_base emreakdik/jcluzet (prospective)</summary>
   
 ```c
 char	to_lower(char c)
@@ -4104,7 +4104,7 @@ typedef struct    s_list
 ```
 
 <details>
-  <summary>Answer ft_list_size gitbook</summary>
+  <summary>Answer ft_list_size gitbook (prospective)</summary>
   
 ```c
 #include "ft_list.h"
@@ -4338,6 +4338,63 @@ int main(int argc, char **argv)
 ```
 </details>
 
+<details>
+  <summary>Answer ft_range (http://www.anit.az/?p=1224) (prospective)</summary>
+  
+```c
+#include <stdlib.h>
+
+int     absolute_value(int n)
+{
+    if (n < 0)
+        return (-n);
+    return (n);
+}
+
+int     *ft_range(int start, int end)
+{
+    int number_of_ints;
+    int *array;
+    int step;
+    int i;
+ 
+    number_of_ints = 1 + absolute_value(end - start);
+    array = malloc(sizeof(int) * number_of_ints);
+ 
+    if (start < end)
+        step = 1;
+    else
+        step = -1;
+ 
+    i = 0;
+    while (i < number_of_ints)
+    {
+        array[i] = start;
+        start = start + step;
+        ++i;
+    }
+    return (array);
+}
+ 
+#include <stdio.h>
+
+int      main(void)
+{
+ int start = -1;
+ int end = 2;
+ 
+ int *arr = ft_range(start, end);
+ 
+ int i = 0;
+ while (i < (1 + absolute_value(end - start)))
+ {
+     printf("%d\n ", arr[i]);
+     ++i;
+ }
+}
+```
+</details>
+
 ---
 ### (7) ft_rrange
 ```
@@ -4428,7 +4485,7 @@ int *ft_rrange(int start, int end)
 </details>
 
 <details>
-  <summary>Answer ft_rrange emreakdik/jcluzet</summary>
+  <summary>Answer ft_rrange emreakdik/jcluzet (prospective)</summary>
   
 ```c
 #include <stdlib.h>
@@ -4523,7 +4580,7 @@ $>
 ```
 
 <details>
-  <summary>Answer hidenp gitbook</summary>
+  <summary>Answer hidenp gitbook (prospective)</summary>
   
 ```c
 #include <unistd.h>
@@ -4713,7 +4770,7 @@ unsigned int lcm(unsigned int a, unsigned int b)
 </details>
 
 <details>
-  <summary>Answer lcm emreakdik/jcluzet</summary>
+  <summary>Answer lcm emreakdik/jcluzet (prospective)</summary>
   
 ```c
 unsigned int lcm(unsigned int a, unsigned int b)
@@ -4889,7 +4946,7 @@ $
 ```
 
 <details>
-  <summary>Answer pgcd gitbook</summary>
+  <summary>Answer pgcd gitbook (prospective)</summary>
   
 ```c
 #include <stdio.h>
@@ -4926,7 +4983,7 @@ int main(int ac, char **av)
 </details>
 
 <details>
-  <summary>Answer pgcd pasqualerossi</summary>
+  <summary>Answer pgcd pasqualerossi (prospective)</summary>
   
 ```c
 #include <stdio.h>
@@ -5016,7 +5073,7 @@ $
 ```
 
 <details>
-  <summary>Answer print_hex gitbook</summary>
+  <summary>Answer print_hex gitbook (prospective)</summary>
   
 ```c
 #include <unistd.h>
@@ -5224,7 +5281,7 @@ int main(int ac, char **av)
 </details>
 
 <details>
-  <summary>Answer rstr_capitalizer pasqualerossi</summary>
+  <summary>Answer rstr_capitalizer pasqualerossi (prospective)</summary>
   
 ```c
 #include <unistd.h>
@@ -5348,7 +5405,7 @@ $>
 ```
 
 <details>
-  <summary>Answer str_capitalizer gitbook</summary>
+  <summary>Answer str_capitalizer gitbook (prospective)</summary>
   
 ```c
 #include <unistd.h>
@@ -5681,7 +5738,7 @@ int	main(int argc, char *argv[])
 </details>
 
 <details>
-  <summary>Answer tab_mult emreakdik/jcluzet</summary>
+  <summary>Answer tab_mult emreakdik/jcluzet (prospective)</summary>
   
 ```c
 #include <unistd.h>
