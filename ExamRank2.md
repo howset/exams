@@ -2279,7 +2279,7 @@ $>
 ```c
 #include <unistd.h>
 
-int main (int ac, char **a)
+int main (int ac, char **a) // fails for spaces at end
 {
 	if (ac == 2)
 	{
@@ -2397,13 +2397,13 @@ If the array is empty, the function returns 0.
 ```
 
 <details>
-  <summary>Answer max gitbook</summary>
+  <summary>Answer max gitbook (wrong)</summary>
   
 ```c
 int		max(int* tab, unsigned int len)
 {
 	int count = 0;
-	int result = 0;
+	int result = 0; // fails if all negative array
 	int i = 0;
 	if (len > 0)
 	{
@@ -2623,7 +2623,7 @@ _____________
 ```
 
 <details>
-  <summary>Answer reverse_bits gitbook</summary>
+  <summary>Answer reverse_bits gitbook (bitwise)</summary>
   
 ```c
 unsigned char	reverse_bits(unsigned char octet)
@@ -2670,7 +2670,7 @@ int	main(void)
 </details>
 
 <details>
-  <summary>Answer reverse_bits pasqualerossi</summary>
+  <summary>Answer reverse_bits pasqualerossi (arithmetics)</summary>
   
 ```c
 unsigned char	reverse_bits(unsigned char octet)
@@ -2690,7 +2690,7 @@ unsigned char	reverse_bits(unsigned char octet)
 </details>
 
 <details>
-  <summary>Answer reverse_bits emreakdik</summary>
+  <summary>Answer reverse_bits emreakdik (arithmetics)</summary>
   
 ```c
 unsigned char	reverse_bits(unsigned char octet)
