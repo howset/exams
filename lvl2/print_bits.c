@@ -1,40 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrev.c                                        :+:      :+:    :+:   */
+/*   print_bits.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 11:39:32 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/03/28 11:51:12 by hsetyamu         ###   ########.fr       */
+/*   Created: 2024/03/28 14:07:51 by hsetyamu          #+#    #+#             */
+/*   Updated: 2024/03/28 14:39:59 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char *ft_strrev(char *str)
-{
-	char	temp;
-	int	i = 0;
-	int	j = 0;
+#include <unistd.h>
 
-	while (str[i])
-		i++;
-	i--;
-	while (j < i)
+void print_bits(unsigned char octet)
+{
+	int i = 8;
+	unsigned char bit = 0;
+
+	while (i)
 	{
-		temp = str[j];
-		str[j] = str[i];
-		str[i] = temp;
-		j++;
 		i--;
+		bit = (octet >> i & 1);
+		bit = bit + '0';
+		write(1, &bit, 1);
 	}
-	return (str);
 }
 
-#include <stdio.h>
-int	main(void)
+int main(void)
 {
-	char	res[] = "Dogdog catcat1";
-	ft_strrev(res);
-	printf("Res: %s\n", res);
+	unsigned char octet = 'd';
+
+	print_bits(octet);
 	return (0);
 }

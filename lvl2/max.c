@@ -1,40 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrev.c                                        :+:      :+:    :+:   */
+/*   max.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 11:39:32 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/03/28 11:51:12 by hsetyamu         ###   ########.fr       */
+/*   Created: 2024/03/28 12:26:27 by hsetyamu          #+#    #+#             */
+/*   Updated: 2024/03/28 12:26:28 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char *ft_strrev(char *str)
+int	max(int* tab, unsigned int len)
 {
-	char	temp;
-	int	i = 0;
-	int	j = 0;
+	unsigned int	i = 0;
+	int res;
 
-	while (str[i])
-		i++;
-	i--;
-	while (j < i)
+	if (len == 0)
+		return (0);
+	res = tab[i];
+	while (i < len)
 	{
-		temp = str[j];
-		str[j] = str[i];
-		str[i] = temp;
-		j++;
-		i--;
+		if (res < tab[i] )
+			res = tab[i];
+		i++;
 	}
-	return (str);
+	return (res);
 }
 
 #include <stdio.h>
-int	main(void)
+
+int main()
 {
-	char	res[] = "Dogdog catcat1";
-	ft_strrev(res);
-	printf("Res: %s\n", res);
-	return (0);
+	int tab[] = {-3, -2, -1, -10, -9};
+	//int tab[] = {-3, -2, -1, 10, -9};
+	printf("%d", max(tab, 5));
 }
