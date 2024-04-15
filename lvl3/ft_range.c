@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-int     absolute_value(int n)
+int     absval(int n)
 {
     if (n < 0)
         return (-n);
@@ -9,13 +9,13 @@ int     absolute_value(int n)
 
 int     *ft_range(int start, int end)
 {
-    int number_of_ints;
+    int arr_len;
     int *array;
     int step;
     int i;
  
-    number_of_ints = 1 + absolute_value(end - start);
-    array = malloc(sizeof(int) * number_of_ints);
+    arr_len = 1 + absval(end - start);
+    array = malloc(sizeof(int) * arr_len);
  
     if (start < end)
         step = 1;
@@ -23,7 +23,7 @@ int     *ft_range(int start, int end)
         step = -1;
  
     i = 0;
-    while (i < number_of_ints)
+    while (i < arr_len)
     {
         array[i] = start;
         start = start + step;
@@ -42,7 +42,7 @@ int      main(void)
  int *arr = ft_range(start, end);
  
  int i = 0;
- while (i < (1 + absolute_value(end - start)))
+ while (i < (1 + absval(end - start)))
  {
      printf("%d\n ", arr[i]);
      ++i;
