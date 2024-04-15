@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:07:51 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/03/28 14:39:59 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:43:41 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void print_bits(unsigned char octet)
 	while (i)
 	{
 		i--;
-		bit = (octet >> i & 1);
+		bit = (octet >> i) & 1;
 		bit = bit + '0';
 		write(1, &bit, 1);
 	}
