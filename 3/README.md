@@ -2,11 +2,8 @@
 
 Records:
 ## ☢ Exam 3
-### ☠ no date yet
-- ???? 👌
-- ???? 🖕
-
-### 🐭 no date yet
+### 🐭 06.08.2024
+- ft_printf 👌
 
 #### `ft_printf`
 `ft_printf` is used to print formatted output to the screen. It contains the relevant header files (`<unistd.h>` and `<stdarg.h>`) and uses a variable argument list.
