@@ -1,0 +1,26 @@
+Assignment name: permutations
+Expected files: *.c *.h
+Function allowed: puts, malloc, calloc, realloc, free, write
+
+Write a program that will print all the permutations of a string given
+as an argument.
+Solutions must be given in an alphabetical order.
+
+We will not try your program with duplicates. example: "abccd"
+
+Examples:
+./permutations a
+a
+
+./permutations ab
+ab
+ba
+
+./permutations abc
+abc
+acb
+bac
+bca
+cab
+cba 
+*/

@@ -1,0 +1,15 @@
+/*Expected files : *.c *.h
+Allowed  functions: atoi, printf, write
+
+Write a program that will print all the solutions to the n queens problem for n given as argument. We will not test with negative values. The order of the solution is not important.You will display solutions under the following format:
+
+<p1> <p2> <p3>... \n
+
+where pn is the line index of the queen in each column starting from 0.
+
+./n_queens 2 | cat -e
+(nothing)
+
+./n_queens 4 | cat -e
+1302 $
+2031 $

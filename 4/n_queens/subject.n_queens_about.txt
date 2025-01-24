@@ -1,0 +1,5 @@
+Chess composer Max Bezzel published the eight queens puzzle in 1848. Franz Nauck published the first solutions in 1850. Nauck also extended the puzzle to the n queens problem, with n queens on a chessboard of n x n squares. This is how Nauck describes the problem:
+
+The Eight Queens Problem.
+
+One of the classical problems connected with a chessboard is determination of the number of ways in which eight queens can be placed on a chessboard, or more generally, in which n queens can be placed on a board of n^n (n to the power of n) cells so that no queen can take any other.
