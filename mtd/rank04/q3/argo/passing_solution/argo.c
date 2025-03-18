@@ -53,7 +53,7 @@ json	parse_json(FILE *stream)
 json	parse_map(FILE *stream)
 {
 	json	json_map;
-			
+
 	json_map.type = MAP;
 	json_map.map.data = NULL;
 	json_map.map.size = 0;
@@ -75,7 +75,7 @@ json	parse_map(FILE *stream)
 			new_pair.key = parse_string(stream);
 			if (g_error)
 			{
-				printf("HEREH\n");
+				//printf("HEREH\n");
 				free(new_pair.key);
 				return (json_map);
 			}
@@ -161,7 +161,7 @@ json	parse_number(FILE *stream)
 
 	num_json.type = INTEGER;
 	num_json.integer = -42;
-	ret_fscanf = fscanf(stream, "%d", &res);
+	ret_fscanf = fscanf(stream, "%d", &res); // atoi thingie
 	if (ret_fscanf <= 0 || ret_fscanf == EOF)
 	{
 		set_g_error();

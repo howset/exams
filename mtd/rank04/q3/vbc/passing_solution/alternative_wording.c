@@ -78,6 +78,7 @@ int eval_tree(node *tree)
 		case VAL:
 			return (tree->val);
 	}
+	return 0;
 }
 
 
