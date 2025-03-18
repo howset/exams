@@ -1,0 +1,35 @@
+# argo: exam rank04
+
+
+## BNF of argo json
+<json> ::= <primitive> | <container>
+
+<primitive> ::= <integer> | <string>
+
+<container> ::= '{' <pair> *(', ' <pair>) '}' ; A sequence of 'pairs'
+<pair> ::= <string> ': ' <json> ; A pair consisting of a name, and a JSON value
+
+
+## Control flow of argo
+argo(json *dst, FILE *stream)
+	if INTEGER
+		extract and store integer
+		peek beyond, if !(EOF | ',' | '}'), report ill. & ret -1
+		return 1
+	else if STRING
+		extract and store string
+		peek beyond, if not \", report the illegal & return -1
+		return 1
+	else if MAP
+		while (1)
+			expect complete "string"
+			expect ':'
+			expect json
+			if ',' => continue ; (expect "string", then ':', etc)
+
+			if not '}'
+				return -1;
+			return 1;
+	else
+		expect EOF;
+		if not, uncool;

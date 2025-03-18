@@ -1,0 +1,4 @@
+perf stat -r 1 ./a.out < 270_12
+
+// man perf-stat || man perf stat || info perf-stat
+// NOT man perf && NOT info perf stat

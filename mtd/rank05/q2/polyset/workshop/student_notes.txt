@@ -1,0 +1,9 @@
+Alongside of using diamond inheritance to define the has() function for both
+(1) searchable_tree_bag and (2) searchable_array_bag, the assignment seems
+to want to test our debugging capabilities by making us
+
+a. add a declaration in tree_bag.hpp
+    tree_bag& operator=(const tree_bag &src);
+b. update a function declaration in tree_bag.hpp
+    from:   static void *copy_node(node *);
+    to:     node *copy_node(node *);
