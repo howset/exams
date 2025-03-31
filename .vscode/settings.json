@@ -1,7 +1,8 @@
 {
 	"files.associations": {
 		"unistd.h": "c",
-		"string.h": "c"
+		"string.h": "c",
+		"stdlib.h": "c"
 	},
 	"workbench.colorCustomizations": {
 		"activityBar.activeBackground": "#65c89b",
