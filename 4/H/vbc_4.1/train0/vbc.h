@@ -14,9 +14,17 @@ typedef struct node {
 	struct node	*r;
 } node;
 
+//main.c
 node	*new_node(node n);
 void	unexpected(char c);
-int	accept(char *s, char c);
-int	expect(char *s, char c);
+int	accept(char **s, char c); //changed from *s to **s
+int	expect(char **s, char c); //changed from *s to **s
 int	eval_tree(node *tree);
-node	*pars_expr(char *s);
+
+
+//vbc.c
+void	destroy_tree(node* tree);
+node	*parse_expression(char **s); //moved from main.c, changed from *s to **s
+node	*parse_term(char **s);
+node	*parse_factor(char **s);
+node	*parse_number(char **s);

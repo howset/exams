@@ -17,9 +17,9 @@ void	unexpected(char c)
 		printf("Unexpected end of input");
 }
 
-int	accept(char *s, char c)
+int	accept(char **s, char c)  //changed from *s to **s
 {
-	if (*s == c)
+	if (**s == c)
 	{
 		(*s)++;
 		return 1;
@@ -27,11 +27,11 @@ int	accept(char *s, char c)
 	return 0;
 }
 
-int	expect(char *s, char c)
+int	expect(char **s, char c) //changed from *s to **s
 {
 	if (accept(s, c))
 		return 1;
-	unexpected(*s);
+	unexpected(**s);
 		return 0;
 }
 
@@ -48,12 +48,26 @@ int	eval_tree(node *tree)
 	}
 }
 
-int	main(int ac, char **av)
+int	main(int ac, char **av) //overhauled
 {
+	char *input;
+	node *tree;
+
 	if (ac != 2)
 		return 1;
-	node *tree = pars_expr(av[1]);
+	input = av[1];
+	tree = parse_expression(&input);
 	if (!tree)
+	{
+		destroy_tree(tree);
 		return 1;
+	}
+	else if (*input)
+	{
+		unexpected(*input);
+		destroy_tree(tree);
+		return 1;
+	}
 	printf("%d\n", eval_tree(tree));
+	destroy_tree(tree);
 }
