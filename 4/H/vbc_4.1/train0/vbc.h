@@ -20,10 +20,9 @@ void	unexpected(char c);
 int	accept(char **s, char c); //changed from *s to **s
 int	expect(char **s, char c); //changed from *s to **s
 int	eval_tree(node *tree);
-
+void	destroy_tree(node* tree);
 
 //vbc.c
-void	destroy_tree(node* tree);
 node	*parse_expression(char **s); //moved from main.c, changed from *s to **s
 node	*parse_term(char **s);
 node	*parse_factor(char **s);
