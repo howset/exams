@@ -1,0 +1,51 @@
+START sandbox(f, timeout, verbose)
+|
+├── Fork a process with pid = fork()
+|   |
+|   ├── If fork fails (pid < 0)
+|   |   └── Return -1 (error)
+|   |
+|   ├── If in child process (pid == 0)
+|   |   |
+|   |   ├── Set up signal handler for SIGALRM
+|   |   |   ├── sa.sa_handler = timeout_handler
+|   |   |   ├── sa.sa_flags = 0
+|   |   |   ├── sigemptyset(&sa.sa_mask)
+|   |   |   └── sigaction(SIGALRM, &sa, NULL)
+|   |   |
+|   |   ├── Set alarm to trigger after 'timeout' seconds
+|   |   ├── Execute the function f()
+|   |   └── If f() returns, exit with code 0 (success)
+|   |
+|   └── If in parent process
+|       |
+|       ├── Wait for child process with waitpid(pid, &status, 0)
+|       |   └── If waitpid fails, return -1 (error)
+|       |
+|       └── Check how child process terminated
+|           |
+|           ├── If exited normally (WIFEXITED)
+|           |   |
+|           |   ├── Get exit code with WEXITSTATUS
+|           |   |
+|           |   ├── If exit_code == 0 (success)
+|           |   |   ├── If verbose, print "Nice function!"
+|           |   |   └── Return 1 (nice function)
+|           |   |
+|           |   ├── If exit_code == 142 (timeout)
+|           |   |   ├── If verbose, print timeout message
+|           |   |   └── Return 0 (bad function)
+|           |   |
+|           |   └── If any other exit_code (failure)
+|           |       ├── If verbose, print exit code message
+|           |       └── Return 0 (bad function)
+|           |
+|           ├── If terminated by signal (WIFSIGNALED)
+|           |   ├── Get signal number with WTERMSIG
+|           |   ├── If verbose, print signal description
+|           |   └── Return 0 (bad function)
+|           |
+|           └── For any other termination reason
+|               └── Return 0 (bad function)
+|
+END
