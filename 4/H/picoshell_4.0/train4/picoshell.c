@@ -35,7 +35,7 @@ int picoshell(char **cmds[])
 				close(fd[1]);
 			}
 			execvp(cmds[i][0], cmds[i]);
-			exit(EXIT_FAILURE)
+			exit(EXIT_FAILURE);
 		}
 		else
 		{
