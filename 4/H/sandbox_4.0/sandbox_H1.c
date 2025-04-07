@@ -35,7 +35,7 @@ int sandbox(void (*f)(void), unsigned int timeout, bool verbose)
 		int result = waitpid(pid, &status, 0);
 		if (result < 0)
 			return (-1);
-		if (WIFEXITED(status))
+		if (WIFEXITED(status)) //check if child terminates normally
 		{
 			int exit_code = WEXITSTATUS(status);
 			if (exit_code == 0) //function exited normally (code 0)
