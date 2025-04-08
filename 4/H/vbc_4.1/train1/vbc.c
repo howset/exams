@@ -9,7 +9,7 @@ int	main(int ac, char **av)
 	tree = parse_expr(input);
 	if (!tree)
 	{
-		destroys_tree(tree);
+		destroy_tree(tree);
 		return 1;
 	}	
 	else if (*input)

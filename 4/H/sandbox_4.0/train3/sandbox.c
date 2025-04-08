@@ -34,7 +34,7 @@ int sandbox(void(*f)(void), unsigned int timeout, bool verbose)
 	{
 		int res = waitpid(pid, &status, 0);
 		if (res == -1)
-			return (1);
+			return (-1);
 		if (WIFEXITED(status))
 		{
 			int exit_code = WEXITSTATUS(status);
