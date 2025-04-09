@@ -1,36 +1,16 @@
-int	main(int ac, char **av)
-{
-	char *input;
-	node *tree;
-	
-	if (ac != 2)
-		return (1);
-	input = av[1];
-	tree = parse_expr(input);
-	if (!tree)
-	{
-		destroy_tree(tree);
-		return (1);
-	}
-	else if (*input)
-	{
-		unexpected(*input);
-		destroy_tree(tree);
-		return (1);
-	}
-	printf("%d\n", eval_tree(tree));
-}
+#include "vbc.h"
 
 node *parse_expr(char **s)
 {
 	node	*left;
-	node 	*right;
+	node	*right;
 	node	nnode;
-	
+
 	left = parse_term(s);
 	while(accept(s, '+'))
 	{
-		if(!right)
+		right = parse_term(s);
+		if (!right)
 		{
 			destroy_tree(left);
 			return (NULL);
@@ -43,16 +23,17 @@ node *parse_expr(char **s)
 	return (left);
 }
 
-node *parse_expr(char **s)
+node *parse_term(char **s)
 {
 	node	*left;
-	node 	*right;
+	node	*right;
 	node	nnode;
-	
-	left = parse_factor(s);
+
+	left = parse_fact(s);
 	while(accept(s, '*'))
 	{
-		if(!right)
+		right = parse_fact(s);
+		if (!right)
 		{
 			destroy_tree(left);
 			return (NULL);
@@ -65,39 +46,39 @@ node *parse_expr(char **s)
 	return (left);
 }
 
-node *parse_factor(char **s)
+node *parse_fact(char **s)
 {
-	node	*expr;
-	
+	node *expr;
+
 	if (accept(s, '('))
 	{
-		expr = parse_exp(s);
-		if(!expect(s, ')'))
+		expr = parse_expr(s);
+		if (!expect(s,')'))
 		{
 			destroy_tree(expr);
 			return (NULL);
 		}
 		return (expr);
 	}
-	return (parse_num(s));
+	return (parse_numb(s));
 }
 
-node *parse_num(char **s)
+node* parse_numb(char **s)
 {
-	node	nnode;
-	
-	if(isdigit(**s))
+	node nnode;
+
+	if (isdigit(**s))
 	{
 		nnode.type = VAL;
 		nnode.val = **s - '0';
 		nnode.l = NULL;
 		nnode.r = NULL;
 		(*s)++;
-		return(new_node(nnode));
+		return (new_node(nnode));
 	}
 	else
 	{
 		unexpected(**s);
-		return (NULL)
+		return (NULL);
 	}
 }
