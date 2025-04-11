@@ -1,3 +1,36 @@
+int	accept(char **s, char c)
+{
+	if (**s == c)
+	{
+		(*s)++;
+		return 1;
+	}
+	return 0;
+}
+
+int	expect(char **s, char c)
+{
+	if (accept(s, c))
+		return 1;
+	unexpected(**s);
+		return 0;
+}
+
+int	eval_tree(node *tree)
+{
+	switch (tree->type)
+	{
+		case ADD:
+			return (eval_tree(tree->l) + eval_tree(tree->r));
+		case MULTI:
+			return (eval_tree(tree->l) * eval_tree(tree->r));
+		case VAL:
+			return tree->val;
+	}
+	return (0);
+}
+
+
 int	main(int ac, char **av)
 {
 	if (ac != 2)
