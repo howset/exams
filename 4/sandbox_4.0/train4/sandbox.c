@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <signal.h>
 #include <stdio.h>
+#include <string.h>
 
 void	timeout_handler(int signum)
 {
@@ -17,7 +18,7 @@ int sandbox(void(*f)(void), unsigned int timeout, bool verbose)
 	struct sigaction sa;
 	pid_t	pid;
 	int	status;
-	
+
 	pid = fork();
 	if (pid < 0)
 		return (-1);
@@ -54,16 +55,59 @@ int sandbox(void(*f)(void), unsigned int timeout, bool verbose)
 			else
 			{
 				if (verbose)
-					printf("Bad function: exited with code %s\n", exit_code);
+					printf("Bad function: exited with code %d\n", exit_code);
 				return (0);
 			}
 		}
 		if (WIFSIGNALED(status))
 		{
 			int sig = WTERMSIG(status);
-			if (verbose)
+			if (verbose)ou will find in this directory a file main.c which contain something to help you
+			test your function.
+
 				printf("Bad function: %s\n", strsignal(sig));
 			return (0);
-		}	
+		}
 	}
+	return (0);
+}
+#include <stdio.h>
+#include <unistd.h>
+#include <stdbool.h>
+
+// Declare the sandbox function
+int sandbox(void(*f)(void), unsigned int timeout, bool verbose);
+
+// Sample function that runs successfully
+void successful_function(void)
+{
+    printf("This function runs successfully.\n");
+}
+
+// Sample function that runs indefinitely (to test timeout)
+void infinite_loop_function(void)
+{
+    while (1)
+        ;
+}
+
+// Sample function that causes a segmentation fault
+void segfault_function(void)
+{
+    int *ptr = NULL;
+    *ptr = 42; // Dereferencing a NULL pointer
+}
+
+int main(void)
+{
+    printf("Testing successful function:\n");
+    sandbox(successful_function, 5, true);
+
+    printf("\nTesting infinite loop function (timeout):\n");
+    sandbox(infinite_loop_function, 2, true);
+
+    printf("\nTesting segmentation fault function:\n");
+    sandbox(segfault_function, 5, true);
+
+    return 0;
 }

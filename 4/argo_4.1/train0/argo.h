@@ -5,14 +5,18 @@
 #include <malloc.h>
 
 
-typedef struct	json {
-	enum {
+typedef struct	json
+{
+	enum
+	{
 		MAP,
 		INTEGER,
 		STRING
 	} type;
-	union {
-		struct {
+	union
+	{
+		struct
+		{
 			struct pair	*data;
 			size_t		size;
 		} map;
