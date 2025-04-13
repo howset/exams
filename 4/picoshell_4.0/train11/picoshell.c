@@ -9,7 +9,7 @@ int picoshell(char **cmds[])
 	int fd[2];
 	int status;
 	pid_t	pid;
-	
+
 	i = 0;
 	prev_fd = 0;
 	while (cmds[i])
