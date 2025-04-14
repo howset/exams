@@ -1,3 +1,4 @@
+```
 START ft_popen(file, argv, type)
 |
 ├── Check if type is valid ('r' or 'w')
@@ -42,3 +43,4 @@ START ft_popen(file, argv, type)
 |       └── Return fd_to_return
 |
 END
+```

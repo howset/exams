@@ -1,3 +1,4 @@
+```
 START main()
 |
 ├── Check arguments
@@ -61,3 +62,4 @@ START main()
 ├── Print result
 ├── Free memory with destroy_tree(tree)
 └── Return success
+```

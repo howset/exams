@@ -1,3 +1,4 @@
+```
 START picoshell(cmds)
 |
 ├── Initialize variables:
@@ -41,3 +42,4 @@ START picoshell(cmds)
 |       └── Return 1 (error)
 |
 └── Return 0 (success)
+```
