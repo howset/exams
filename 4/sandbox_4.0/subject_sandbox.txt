@@ -1,4 +1,4 @@
-(4.4.2025)
+(4.4.2025 - hs)
 Assignment name: sandbox
 Expected files: sandbox.c
 Allowed functions: fork, waitpid, exit, alarm, sigaction, kill, printf,

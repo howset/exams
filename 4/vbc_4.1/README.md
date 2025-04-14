@@ -7,18 +7,18 @@ START main()
 |
 ├── Call parse_expr(&input) to create syntax tree
 |   |
-|   ├── parse_expr(&input)
+|   ├── parse_expr(&input) --> ADD
 |   |   |
-|   |   ├── Call parse_term(&input) to get left subtree
+|   |   ├── Call parse_term(&input) to get left subtree --> MULTI
 |   |   |   |
-|   |   |   ├── Call parse_fact(&input) to get left subtree
+|   |   |   ├── Call parse_fact(&input) to get left subtree --> PARENTHESIS
 |   |   |   |   |
 |   |   |   |   ├── If input starts with '('
 |   |   |   |   |   ├── Skip '('
 |   |   |   |   |   ├── Recursively call parse_expr(&input)
 |   |   |   |   |   └── Expect ')' (return NULL if missing)
 |   |   |   |   |
-|   |   |   |   └── Else call parse_nbr(&input)
+|   |   |   |   └── Else call parse_nbr(&input) --> NUMBERS
 |   |   |   |       |
 |   |   |   |       ├── If input starts with digit
 |   |   |   |       |   ├── Create value node with digit
