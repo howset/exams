@@ -11,7 +11,7 @@
 
 int	g_timeoutflag;
 
-void timeout_handler(int signum)
+static void timeout_handler(int signum)
 {
 	if (signum == SIGALRM)
 		g_timeoutflag = 1; 
