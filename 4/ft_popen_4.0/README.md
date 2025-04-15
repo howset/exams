@@ -18,13 +18,13 @@ START ft_popen(file, argv, type)
 |   |   ├── If type == 'r' (reading from child)
 |   |   |   ├── Close read end of pipe (fd[0])
 |   |   |   ├── Redirect stdout to write end (dup2(fd[1], STDOUT_FILENO))
-|   |   |   |   └── If dup2 fails, exit with failure
+|   |   |   |   └── If dup2 fails, exit with failure -> (maybe can be skipped)
 |   |   |   └── Close duplicated fd (fd[1])
 |   |   |
 |   |   ├── If type == 'w' (writing to child)
 |   |   |   ├── Close write end of pipe (fd[1])
 |   |   |   ├── Redirect stdin to read end (dup2(fd[0], STDIN_FILENO))
-|   |   |   |   └── If dup2 fails, exit with failure
+|   |   |   |   └── If dup2 fails, exit with failure -> (maybe can be skipped)
 |   |   |   └── Close duplicated fd (fd[0])
 |   |   |
 |   |   ├── Execute the command (execvp(file, argv))
@@ -34,11 +34,11 @@ START ft_popen(file, argv, type)
 |       |
 |       ├── If type == 'r' (parent reads from child)
 |       |   ├── Close write end of pipe (fd[1])
-|       |   └── Set fd_to_return = fd[0] (read end)
+|       |   └── Set fd_to_return = fd[0] (read end) -> (just return immediately)
 |       |
 |       ├── If type == 'w' (parent writes to child)
 |       |   ├── Close read end of pipe (fd[0])
-|       |   └── Set fd_to_return = fd[1] (write end)
+|       |   └── Set fd_to_return = fd[1] (write end) -> (just return immediately)
 |       |
 |       └── Return fd_to_return
 |
