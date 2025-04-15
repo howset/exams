@@ -35,7 +35,7 @@ START picoshell(cmds)
 |   |           ├── Close write end of new pipe (fd[1])
 |   |           └── Set prev_fd = fd[0] (read end for next command)
 |   |
-|   └── Increment i for next command
+|   └── Increment i -> (for next command)
 |
 ├── LOOP while wait(&status) > 0 (wait for all child processes)
 |   └── If any child exited abnormally or with non-zero status
