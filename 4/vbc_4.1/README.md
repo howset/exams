@@ -22,7 +22,7 @@ START main()
 |   |   |   |   └── Else call parse_nbr(&input) --> NUMBERS
 |   |   |   |       |
 |   |   |   |       ├── If input starts with digit
-|   |   |   |       |   ├── Create value node with digit
+|   |   |   |       |   ├── Create "VAL" node with digit
 |   |   |   |       |   └── Advance input pointer
 |   |   |   |       |
 |   |   |   |       └── Else print unexpected token and return NULL
@@ -30,12 +30,12 @@ START main()
 |   |   |   └── While next token is '*'
 |   |   |       ├── Skip '*'
 |   |   |       ├── Call parse_fact(&input) to get right subtree
-|   |   |       └── Create multiplication node with left and right subtrees
+|   |   |       └── Create "MULTI" node with left and right subtrees
 |   |   |
 |   |   └── While next token is '+'
 |   |       ├── Skip '+'
 |   |       ├── Call parse_term(&input) to get right subtree
-|   |       └── Create addition node with left and right subtrees
+|   |       └── Create "ADD" node with left and right subtrees
 |   |
 |   └── Return the syntax tree
 |
