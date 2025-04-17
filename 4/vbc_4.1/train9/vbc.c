@@ -66,7 +66,7 @@ node *parse_mid(char **s)
 	return (left);
 }
 
-node *parse_mid(char **s)
+node *parse_high(char **s)
 {
 	node	*expr;
 	
