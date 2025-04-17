@@ -1,3 +1,4 @@
+```
 START sandbox(f, timeout, verbose)
 |
 ├── Fork a process with pid = fork()
@@ -56,3 +57,4 @@ START sandbox(f, timeout, verbose)
 |       |       └── For any other case, return -1
 |
 END
+```

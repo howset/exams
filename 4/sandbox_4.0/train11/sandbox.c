@@ -31,7 +31,7 @@ int sandbox(void(*f)(void), unsigned int timeout, bool verbose)
 		exit(EXIT_SUCCESS);
 	}
 	sa.sa_handler = timeout_handler;
-	sigaction(SIGALRM, %sa, NULL);
+	sigaction(SIGALRM, &sa, NULL);
 	alarm(timeout);
 	if (waitpid(pid, &status, 0) == -1)
 	{
