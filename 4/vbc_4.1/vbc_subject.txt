@@ -1,27 +1,35 @@
-Subject: vbc
-Files to turn: *.c, *.h
-Functions allowed: malloc, calloc, realloc, free, printf, isdigit, write
+(17.4.25 - hs)
+Assignment name		: vbc
+Expected files		: *.c, *.h
+Allowed functions	: malloc, calloc, realloc, free, printf, isdigit, write
+--------------------------------------------------------------------------------
 
-Program: print the result of a math expression given as argument
-- Handle + * and parenthesis
-- Don't handle whitespaces
-- All the values in the expression will be between 0 and 9 included
-- In case of unexpected symbol, print "Unexpected token '%c'\n" and exit code 1.
-    If the symbol is in the end of the input: "Unexpected end of input\n".
-- In case of syscall failure -exit code 1
+Write a program that will print the result of a math expression given as 
+argument.
+You must handle the operations + * and the parenthesis.
+You don't have to handle whitespaces in the expression.
+All the values in the expression will be between 0 and 9 included. 
+In case of unexpected symbol or inappropriate parenthesis, you will
+print "Unexpected token '%c'\n" and exit with the code 1 (if the
+symbol is the end of input you will print: "Unexpected end of input\n").
+In case of a syscall failure you will just exit with the code 1.
 
+You will find in this directory the beginning of the code you need to write.
+
+For example this should work:
 Examples:
 -------------
-./vbc '1'
-1
-
-./vbc '2+3'
-5
-
-./vbc '3*4+5'
-17
-
-./vbc '(3+4)*5'
-35
-
-....
+$> ./vbc '1' | cat -e
+1$
+$> ./vbc '2+3' | cat -e
+5$
+$> ./vbc '3*4+5' | cat -e
+17$
+$> ./vbc '(3+4)*5' | cat -e
+35$
+$> ./vbc '(((((2+2)*2+2)*2+2)*2+2)*2+2)*2' | cat -e
+188$
+$> ./vbc '1+' | cat -e
+Unexpected end of input$
+$> ./vbc '1+2)' | cat -e
+Unexpected token ')'$

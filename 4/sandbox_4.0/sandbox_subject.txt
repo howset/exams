@@ -1,6 +1,8 @@
-Assignment name:    sandbox
-Expected files:     sandbox.c
-Allowed functions:  fork, waitpid, exit, alarm, sigaction, kill, printf, strsignal, errno
+(4.4.2025 - hs)
+Assignment name: sandbox
+Expected files: sandbox.c
+Allowed functions: fork, waitpid, exit, alarm, sigaction, kill, printf,
+strsignal, errno, sigaddset, sigemptyset, sigfillset, sigdelset, sigismember
 --------------------------------------------------------------------------------
 Write the following function:
 

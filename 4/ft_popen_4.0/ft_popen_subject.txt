@@ -1,3 +1,4 @@
+(17.4.2025 - hs)
 Assignment name: ft_popen
 Allowed functions: pipe, fork, dup2, execvp, close, exit
 --------------------------------------------------------------------------------

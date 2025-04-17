@@ -1,3 +1,5 @@
+Confirmed pass on exam. (17.4.25 - hs)
+
 ```
 START ft_popen(file, argv, type)
 |
