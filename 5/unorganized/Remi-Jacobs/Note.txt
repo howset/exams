@@ -1,0 +1,26 @@
+bigint -> CPP02(Ad-hoc polymorphism, operator overloading)
+vect2 ->CPP02(Ad-hoc polymorphism, operator overloading) && CPP07ex02 (subscript operator[] overload)
+polyset ->CPP03(Inheritance) CPP04(Polymorphism, Abstract Classes, and Interfaces) CPP06(casts)
+
+bsq -> so_long/cub3D(map validation)
+logic for solve_bsq:
+Let's say we're at position (i,j) and want to know the largest square ending here:
+
+    ? ? ?
+    ? ? current(i,j)
+    
+If we know:
+- left = largest square ending at (i, j-1)
+- top = largest square ending at (i-1, j)  
+- diagonal = largest square ending at (i-1, j-1)
+
+Then the largest square ending at (i,j) is min(left, top, diagonal) + 1
+Why This Algorithm Works
+The Dynamic Programming approach is brilliant because:
+
+Bottom-up: We build solutions from smaller subproblems
+Optimal substructure: The largest square at (i,j) depends on the largest squares at neighboring positions
+No redundant work: We compute each dp[i][j] exactly once
+Time complexity: O(rows × cols) - we visit each cell once
+Space complexity: O(rows × cols) for the DP table
+This is a classic example of how DP can solve what seems like a complex problem very efficiently!
